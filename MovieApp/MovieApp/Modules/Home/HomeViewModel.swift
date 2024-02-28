@@ -12,6 +12,7 @@ protocol HomeViewModelProtocol {
 
     func viewDidLoad()
     func viewWillAppear()
+    func tableHeaderView()
     func numberOfSections() -> Int
     func numberOfRowsInSection() -> Int
     func cellForRowAt(_ section: Int, completion: @escaping (Result<MovieResponse, APIClientError>) -> Void)
@@ -54,6 +55,18 @@ extension HomeViewModel: HomeViewModelProtocol {
     }
 
     func viewWillAppear() {}
+
+    func tableHeaderView() {
+        let request = APIRequest.fetchTrendingMovies.urlRequest
+        APIClient.shared.execute(request, expecting: MovieResponse.self) { [weak self] result in
+            switch result {
+            case .success(let movies):
+                self?.view?.movieTableHeaderView?.configure(movie: movies.results.randomElement())
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 
     func numberOfSections() -> Int {
         Sections.allCases.count

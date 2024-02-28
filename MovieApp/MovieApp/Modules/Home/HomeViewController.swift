@@ -8,6 +8,7 @@
 import UIKit
 
 protocol HomeViewControllerProtocol: AnyObject {
+    var movieTableHeaderView: MovieTableHeaderView? { get set }
     var frame: CGRect { get }
 
     func prepareViewController()
@@ -16,6 +17,7 @@ protocol HomeViewControllerProtocol: AnyObject {
 
 final class HomeViewController: UIViewController {
     private lazy var viewModel: HomeViewModelProtocol = HomeViewModel()
+    var movieTableHeaderView: MovieTableHeaderView?
 
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -50,10 +52,13 @@ extension HomeViewController: HomeViewControllerProtocol {
     func prepareTableView() {
         view.addSubview(tableView)
         tableView.backgroundColor = .secondarySystemBackground
-        tableView.tableHeaderView = MovieTableHeaderView(
-            frame: .init(x: .zero, y: .zero, width: view.frame.width, height: view.frame.height * 0.70))
         tableView.delegate = self
         tableView.dataSource = self
+
+        movieTableHeaderView = MovieTableHeaderView(
+            frame: .init(x: .zero, y: .zero, width: view.frame.width, height: view.frame.height * 0.70))
+        tableView.tableHeaderView = movieTableHeaderView
+        viewModel.tableHeaderView()
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(
