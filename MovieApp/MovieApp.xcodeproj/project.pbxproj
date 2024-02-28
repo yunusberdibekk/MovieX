@@ -22,6 +22,11 @@
 		BE8FB9B92B8EC1F70002E706 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = BE8FB9B82B8EC1F70002E706 /* SDWebImage */; };
 		BE8FB9BB2B8EC1F70002E706 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BE8FB9BA2B8EC1F70002E706 /* SDWebImageMapKit */; };
 		BE8FB9C32B8EC5E80002E706 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB9C22B8EC5E80002E706 /* HomeViewModel.swift */; };
+		BE8FB9C72B8ED1600002E706 /* SFSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB9C62B8ED1600002E706 /* SFSymbols.swift */; };
+		BE8FB9CD2B8ED1CE0002E706 /* ComingSoonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB9CC2B8ED1CE0002E706 /* ComingSoonViewController.swift */; };
+		BE8FB9CF2B8ED1D40002E706 /* TopSearchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB9CE2B8ED1D40002E706 /* TopSearchesViewController.swift */; };
+		BE8FB9D12B8ED1D90002E706 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB9D02B8ED1D90002E706 /* DownloadsViewController.swift */; };
+		BE8FB9D32B8ED2210002E706 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB9D22B8ED2210002E706 /* RootTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +45,11 @@
 		BE8FB9B12B8EBE7E0002E706 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		BE8FB9B32B8EBE840002E706 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		BE8FB9C22B8EC5E80002E706 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		BE8FB9C62B8ED1600002E706 /* SFSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSymbols.swift; sourceTree = "<group>"; };
+		BE8FB9CC2B8ED1CE0002E706 /* ComingSoonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonViewController.swift; sourceTree = "<group>"; };
+		BE8FB9CE2B8ED1D40002E706 /* TopSearchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSearchesViewController.swift; sourceTree = "<group>"; };
+		BE8FB9D02B8ED1D90002E706 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
+		BE8FB9D22B8ED2210002E706 /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +86,7 @@
 			children = (
 				BE8FB9902B8D8CC40002E706 /* App */,
 				BE8FB9912B8D8D000002E706 /* Core */,
+				BE8FB9C42B8ED1510002E706 /* Utils */,
 				BE8FB9BC2B8EC5900002E706 /* Modules */,
 				BE8FB9BE2B8EC5A50002E706 /* Product */,
 				BE8FB9C12B8EC5D10002E706 /* Resources */,
@@ -107,7 +118,11 @@
 		BE8FB9BC2B8EC5900002E706 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				BE8FB9C82B8ED17A0002E706 /* Root */,
 				BE8FB9BD2B8EC5980002E706 /* Home */,
+				BE8FB9C92B8ED18F0002E706 /* ComingSoon */,
+				BE8FB9CA2B8ED1960002E706 /* Search */,
+				BE8FB9CB2B8ED1980002E706 /* Downloads */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -154,6 +169,54 @@
 				BE8FB9852B8D8C5E0002E706 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		BE8FB9C42B8ED1510002E706 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FB9C52B8ED1550002E706 /* Constants */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		BE8FB9C52B8ED1550002E706 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FB9C62B8ED1600002E706 /* SFSymbols.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		BE8FB9C82B8ED17A0002E706 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FB9D22B8ED2210002E706 /* RootTabBarController.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		BE8FB9C92B8ED18F0002E706 /* ComingSoon */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FB9CC2B8ED1CE0002E706 /* ComingSoonViewController.swift */,
+			);
+			path = ComingSoon;
+			sourceTree = "<group>";
+		};
+		BE8FB9CA2B8ED1960002E706 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FB9CE2B8ED1D40002E706 /* TopSearchesViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		BE8FB9CB2B8ED1980002E706 /* Downloads */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FB9D02B8ED1D90002E706 /* DownloadsViewController.swift */,
+			);
+			path = Downloads;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,13 +297,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE8FB9812B8D8C5D0002E706 /* HomeViewController.swift in Sources */,
+				BE8FB9CD2B8ED1CE0002E706 /* ComingSoonViewController.swift in Sources */,
 				BE8FB9C32B8EC5E80002E706 /* HomeViewModel.swift in Sources */,
 				BE8FB9B22B8EBE7E0002E706 /* APIEndpoint.swift in Sources */,
 				BE8FB9AE2B8EB79E0002E706 /* MovieTableHeaderView.swift in Sources */,
+				BE8FB9D12B8ED1D90002E706 /* DownloadsViewController.swift in Sources */,
+				BE8FB9D32B8ED2210002E706 /* RootTabBarController.swift in Sources */,
 				BE8FB97D2B8D8C5D0002E706 /* AppDelegate.swift in Sources */,
 				BE8FB9AC2B8EAD630002E706 /* Movie.swift in Sources */,
 				BE8FB9B02B8EBBB70002E706 /* APIClient.swift in Sources */,
+				BE8FB9CF2B8ED1D40002E706 /* TopSearchesViewController.swift in Sources */,
 				BE8FB9AA2B8EAC5E0002E706 /* MovieCollectionViewCell.swift in Sources */,
+				BE8FB9C72B8ED1600002E706 /* SFSymbols.swift in Sources */,
 				BE8FB9A82B8EAC4F0002E706 /* MovieTableViewCell.swift in Sources */,
 				BE8FB9B42B8EBE840002E706 /* APIRequest.swift in Sources */,
 				BE8FB97F2B8D8C5D0002E706 /* SceneDelegate.swift in Sources */,
