@@ -1,0 +1,83 @@
+//
+//  MovieTableViewCell.swift
+//  MovieApp
+//
+//  Created by Yunus Emre Berdibek on 28.02.2024.
+//
+
+import UIKit
+
+final class MovieTableViewCell: UITableViewCell {
+    static let identifier: String = "MovieTableViewCell"
+    private var movies: [Movie] = []
+
+    private let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 140, height: 200)
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(
+            MovieCollectionViewCell.self,
+            forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
+        return collectionView
+    }()
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        prepareCollectionView()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+
+    private func prepareCollectionView() {
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(collectionView)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(
+                equalToSystemSpacingBelow: topAnchor,
+                multiplier: 0),
+            collectionView.leadingAnchor.constraint(
+                equalToSystemSpacingAfter: leadingAnchor,
+                multiplier: 0),
+            trailingAnchor.constraint(
+                equalToSystemSpacingAfter: collectionView.trailingAnchor,
+                multiplier: 0),
+            bottomAnchor.constraint(
+                equalToSystemSpacingBelow: collectionView.bottomAnchor,
+                multiplier: 0)
+        ])
+    }
+}
+
+extension MovieTableViewCell {
+    public func configure(with movies: [Movie]) {
+        self.movies = movies
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadData()
+        }
+    }
+}
+
+extension MovieTableViewCell: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        movies.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MovieCollectionViewCell.identifier,
+            for: indexPath) as? MovieCollectionViewCell else { fatalError() }
+
+        cell.configure(movie: movies[indexPath.row])
+        return cell
+    }
+}
+
+extension MovieTableViewCell: UICollectionViewDelegate {}
