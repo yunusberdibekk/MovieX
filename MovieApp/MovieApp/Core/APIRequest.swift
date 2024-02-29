@@ -11,13 +11,13 @@ import Foundation
 final class APIRequest {
     private enum Constants {
         static let BASE_URL = "https://api.themoviedb.org/3"
+        static let YOUTUBE_BASE_URL = "https://youtube.googleapis.com"
         static let API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZmVkZTgxMDA3MjIwZWY2MzcyMzQzNDBhZTY0OWVlYSIsInN1YiI6IjY1Y2I4ZDQ0MTEzODZjMDE3YzUxMTJhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Xr3LyKawzjig3o4Iw37nckQBur63jgJUJjOhUO8-hzE"
     }
 
     private let endpoint: APIEndpoint
     private let pathComponents: [String]
     private let queryParameters: [URLQueryItem]
-
     public let httpMethod = "GET"
 
     public init(endpoint: APIEndpoint, pathComponents: [String] = [], queryParameters: [URLQueryItem] = []) {

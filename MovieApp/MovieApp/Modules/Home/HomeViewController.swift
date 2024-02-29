@@ -7,12 +7,13 @@
 
 import UIKit
 
-protocol HomeViewControllerProtocol: AnyObject {
+protocol HomeViewControllerProtocol: Pushable, AnyObject {
     var movieTableHeaderView: MovieTableHeaderView? { get set }
     var frame: CGRect { get }
 
     func prepareViewController()
     func prepareTableView()
+    func push(_ controller: UIViewController)
 }
 
 final class HomeViewController: UIViewController {
@@ -36,7 +37,7 @@ final class HomeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.viewDidLoad()
+        viewModel.viewWillAppear()
     }
 }
 
@@ -90,6 +91,7 @@ extension HomeViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: MovieTableViewCell.identifier, for: indexPath) as? MovieTableViewCell else { fatalError() }
 
+        cell.delegate = self
         viewModel.cellForRowAt(indexPath.section) { result in
             switch result {
             case .success(let response):
@@ -100,6 +102,12 @@ extension HomeViewController: UITableViewDataSource {
         }
 
         return cell
+    }
+}
+
+extension HomeViewController: MovieTableViewCellProtocol {
+    func didSelectRow(_ movie: Movie) {
+        viewModel.didSelectRow(movie)
     }
 }
 

@@ -16,6 +16,7 @@ protocol HomeViewModelProtocol {
     func numberOfSections() -> Int
     func numberOfRowsInSection() -> Int
     func cellForRowAt(_ section: Int, completion: @escaping (Result<MovieResponse, APIClientError>) -> Void)
+    func didSelectRow(_ movie: Movie)
     func titleForHeaderInSection(_ section: Int) -> String?
     func heightForRowAt() -> CGFloat
     func heightForHeaderInSection() -> CGFloat
@@ -98,15 +99,36 @@ extension HomeViewModel: HomeViewModelProtocol {
         }
     }
 
+    func didSelectRow(_ movie: Movie) {
+        guard let titleName = movie.original_title ?? movie.original_name, let request = YTRequest.searchRequest(titleName + "trailer") else { return }
+
+        APIClient.shared.execute(request, expecting: YoutubeSearchResponse.self) { [weak self] result in
+            switch result {
+            case .success(let videoElement):
+                let movieDetailModel = MovieDetail(
+                    id: movie.id,
+                    title: movie.original_title ?? movie.original_name,
+                    overview: movie.overview,
+                    youtubeVideo: videoElement.items.first)
+
+                DispatchQueue.main.async {
+                    self?.view?.push(MovieDetailViewController(movieDetail: movieDetailModel))
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
     func titleForHeaderInSection(_ section: Int) -> String? {
         return Sections.allCases[section].title
     }
 
     func heightForRowAt() -> CGFloat {
-        200
+        return (view?.frame.width ?? .zero) * 0.5
     }
 
     func heightForHeaderInSection() -> CGFloat {
-        35
+        return (view?.frame.width ?? .zero) * 0.1
     }
 }

@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol MovieTableViewCellProtocol: AnyObject {
+    func didSelectRow(_ movie: Movie)
+}
+
 final class MovieTableViewCell: UITableViewCell {
     static let identifier: String = "MovieTableViewCell"
     private var movies: [Movie] = []
+
+    weak var delegate: MovieTableViewCellProtocol?
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -80,4 +86,9 @@ extension MovieTableViewCell: UICollectionViewDataSource {
     }
 }
 
-extension MovieTableViewCell: UICollectionViewDelegate {}
+extension MovieTableViewCell: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        delegate?.didSelectRow(movies[indexPath.row])
+    }
+}

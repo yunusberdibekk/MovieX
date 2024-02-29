@@ -14,12 +14,12 @@ final class MovieTableHeaderView: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-        imageView.image = UIImage(resource: .defaultCell)
         return imageView
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addGradientLayer()
         preparePhotoCollectionViewCell()
     }
 
@@ -37,6 +37,16 @@ final class MovieTableHeaderView: UICollectionViewCell {
             trailingAnchor.constraint(equalToSystemSpacingAfter: imageView.trailingAnchor, multiplier: 0),
             imageView.bottomAnchor.constraint(equalToSystemSpacingBelow: bottomAnchor, multiplier: 0)
         ])
+    }
+
+    private func addGradientLayer() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor.clear.cgColor,
+            UIColor.systemBackground.cgColor
+        ]
+        gradientLayer.frame = bounds
+        layer.addSublayer(gradientLayer)
     }
 }
 

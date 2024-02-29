@@ -12,4 +12,6 @@ enum SFSymbols: String {
     case play_circle = "play.circle"
     case magnifyingglass
     case arrow_down_to_line = "arrow.down.to.line"
+    case bookmark
+    case bookmark_fill = "bookmark.fill"
 }

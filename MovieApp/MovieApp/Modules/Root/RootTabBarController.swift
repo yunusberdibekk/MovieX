@@ -15,25 +15,29 @@ final class RootTabBarController: UITabBarController {
     }
 
     private func setUpTabBar() {
-        let homeNC = createController(
+        let homeNC = createNavigationController(
             vc: HomeViewController(),
             title: "Home",
             image: .house,
+            prefersLargeTitles: false,
             tag: 0)
         let comingSoonNC = createNavigationController(
             vc: ComingSoonViewController(),
             title: "Coming Soon",
             image: .play_circle,
+            prefersLargeTitles: true,
             tag: 1)
         let searchesNC = createNavigationController(
             vc: TopSearchesViewController(),
             title: "Top Searches",
             image: .magnifyingglass,
+            prefersLargeTitles: true,
             tag: 2)
         let downloadsNC = createNavigationController(
             vc: DownloadsViewController(),
             title: "Downloads",
             image: .arrow_down_to_line,
+            prefersLargeTitles: true,
             tag: 3)
 
         setViewControllers([
@@ -44,7 +48,7 @@ final class RootTabBarController: UITabBarController {
         ], animated: true)
     }
 
-    private func createNavigationController(vc: UIViewController, title: String, image: SFSymbols, tag: Int) -> UINavigationController {
+    private func createNavigationController(vc: UIViewController, title: String, image: SFSymbols, prefersLargeTitles: Bool, tag: Int) -> UINavigationController {
         let navVC = UINavigationController(rootViewController: vc)
 
         navVC.tabBarItem = UITabBarItem(
@@ -52,17 +56,8 @@ final class RootTabBarController: UITabBarController {
             image: UIImage(systemName: image.rawValue),
             tag: tag)
         navVC.navigationItem.largeTitleDisplayMode = .automatic
-        navVC.navigationBar.prefersLargeTitles = true
+        navVC.navigationBar.prefersLargeTitles = prefersLargeTitles ? true : false
 
         return navVC
-    }
-
-    private func createController(vc: UIViewController, title: String, image: SFSymbols, tag: Int) -> UIViewController {
-        vc.tabBarItem = UITabBarItem(
-            title: title,
-            image: UIImage(systemName: image.rawValue),
-            tag: tag)
-
-        return vc
     }
 }
