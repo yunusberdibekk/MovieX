@@ -87,6 +87,18 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		BE7AB3F72B9146BE002CA593 /* APIClient */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FB9AF2B8EBBB70002E706 /* APIClient.swift */,
+				BE8FB9B32B8EBE840002E706 /* APIRequest.swift */,
+				BE8FB9B12B8EBE7E0002E706 /* APIEndpoint.swift */,
+				BE7AB3F02B910813002CA593 /* YTRequest.swift */,
+				BE7AB3F22B9108C3002CA593 /* YTEndpoint.swift */,
+			);
+			path = APIClient;
+			sourceTree = "<group>";
+		};
 		BE8FB9702B8D8C5D0002E706 = {
 			isa = PBXGroup;
 			children = (
@@ -130,9 +142,7 @@
 		BE8FB9912B8D8D000002E706 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				BE8FB9AF2B8EBBB70002E706 /* APIClient.swift */,
-				BE8FB9B32B8EBE840002E706 /* APIRequest.swift */,
-				BE8FB9B12B8EBE7E0002E706 /* APIEndpoint.swift */,
+				BE7AB3F72B9146BE002CA593 /* APIClient */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -155,8 +165,6 @@
 			children = (
 				BE8FB9802B8D8C5D0002E706 /* HomeViewController.swift */,
 				BE8FB9C22B8EC5E80002E706 /* HomeViewModel.swift */,
-				BE7AB3F02B910813002CA593 /* YTRequest.swift */,
-				BE7AB3F22B9108C3002CA593 /* YTEndpoint.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
