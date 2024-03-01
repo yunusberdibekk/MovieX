@@ -99,6 +99,13 @@
 			path = APIClient;
 			sourceTree = "<group>";
 		};
+		BE7AB3F82B914B9D002CA593 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		BE8FB9702B8D8C5D0002E706 = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +149,7 @@
 		BE8FB9912B8D8D000002E706 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				BE7AB3F82B914B9D002CA593 /* Managers */,
 				BE7AB3F72B9146BE002CA593 /* APIClient */,
 			);
 			path = Core;

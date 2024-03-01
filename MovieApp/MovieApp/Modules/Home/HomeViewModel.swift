@@ -17,6 +17,7 @@ protocol HomeViewModelProtocol {
     func numberOfRowsInSection() -> Int
     func cellForRowAt(_ section: Int, completion: @escaping (Result<MovieResponse, APIClientError>) -> Void)
     func didSelectRow(_ movie: Movie)
+    func didTapDownloadAction(_ movie: Movie?)
     func titleForHeaderInSection(_ section: Int) -> String?
     func heightForRowAt() -> CGFloat
     func heightForHeaderInSection() -> CGFloat
@@ -118,6 +119,12 @@ extension HomeViewModel: HomeViewModelProtocol {
                 print(error.localizedDescription)
             }
         }
+    }
+
+    func didTapDownloadAction(_ movie: Movie?) {
+        guard let movie else { return }
+
+        dump(movie)
     }
 
     func titleForHeaderInSection(_ section: Int) -> String? {

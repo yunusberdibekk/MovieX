@@ -19,7 +19,7 @@ protocol MovieDetailViewControllerProtocol: AnyObject {
 }
 
 final class MovieDetailViewController: UIViewController {
-    private let viewModel: MovieDetailViewModel
+    private var viewModel: MovieDetailViewModelProtocol
 
     let webView: WKWebView = {
         let webView = WKWebView()
@@ -47,7 +47,7 @@ final class MovieDetailViewController: UIViewController {
     }()
 
     init(movieDetail: MovieDetail) {
-        viewModel = .init(movieDetail: movieDetail)
+        viewModel = MovieDetailViewModel(movieDetail: movieDetail)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -112,10 +112,10 @@ extension MovieDetailViewController: MovieDetailViewControllerProtocol {
             image: UIImage(systemName: SFSymbols.bookmark.rawValue),
             style: .done,
             target: self,
-            action: #selector(addBookmark))
+            action: #selector(didTapBookmarkButton))
     }
 
-    @objc func addBookmark() {
+    @objc func didTapBookmarkButton() {
         print("Post")
     }
 }

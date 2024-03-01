@@ -9,6 +9,7 @@ import UIKit
 
 protocol MovieTableViewCellProtocol: AnyObject {
     func didSelectRow(_ movie: Movie)
+    func didTapDownloadAction(_ movie: Movie?)
 }
 
 final class MovieTableViewCell: UITableViewCell {
@@ -90,5 +91,20 @@ extension MovieTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         delegate?.didSelectRow(movies[indexPath.row])
+    }
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        let config = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil)
+        { [weak self] _ in
+            let downloadAction = UIAction(title: "Download", state: .off) { _ in
+                if let indexpath = indexPaths.first {
+                    self?.delegate?.didTapDownloadAction(self?.movies[indexpath.row])
+                }
+            }
+            return UIMenu(title: "", options: .singleSelection, children: [downloadAction])
+        }
+        return config
     }
 }

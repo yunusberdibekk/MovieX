@@ -109,6 +109,10 @@ extension HomeViewController: MovieTableViewCellProtocol {
     func didSelectRow(_ movie: Movie) {
         viewModel.didSelectRow(movie)
     }
+
+    func didTapDownloadAction(_ movie: Movie?) {
+        viewModel.didTapDownloadAction(movie)
+    }
 }
 
 extension HomeViewController: UITableViewDelegate {
