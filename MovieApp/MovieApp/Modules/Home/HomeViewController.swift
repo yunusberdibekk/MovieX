@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol HomeViewControllerProtocol: Pushable, AnyObject {
+protocol HomeViewControllerProtocol: Pushable, Alertable, AnyObject {
     var movieTableHeaderView: MovieTableHeaderView? { get set }
     var frame: CGRect { get }
 

@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-protocol MovieDetailViewControllerProtocol: AnyObject {
+protocol MovieDetailViewControllerProtocol: Alertable, AnyObject {
     var webView: WKWebView { get }
     var titleLabel: UILabel { get }
     var overviewLabel: UILabel { get }
@@ -16,6 +16,7 @@ protocol MovieDetailViewControllerProtocol: AnyObject {
     func prepareNavigationBar()
     func prepareWebView()
     func prepareLabels()
+    func updateBookmarkImage(_ sfImage: SFSymbols)
 }
 
 final class MovieDetailViewController: UIViewController {
@@ -46,8 +47,10 @@ final class MovieDetailViewController: UIViewController {
         return label
     }()
 
-    init(movieDetail: MovieDetail) {
-        viewModel = MovieDetailViewModel(movieDetail: movieDetail)
+    init(movie: Movie, movieDetail: MovieDetail) {
+        viewModel = MovieDetailViewModel(
+            movie: movie,
+            movieDetail: movieDetail)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -61,6 +64,11 @@ final class MovieDetailViewController: UIViewController {
         view.backgroundColor = .systemBackground
         viewModel.view = self
         viewModel.viewDidLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.viewWillAppear()
     }
 }
 
@@ -115,7 +123,11 @@ extension MovieDetailViewController: MovieDetailViewControllerProtocol {
             action: #selector(didTapBookmarkButton))
     }
 
+    func updateBookmarkImage(_ sfImage: SFSymbols) {
+        navigationItem.rightBarButtonItem?.image = UIImage(systemName: sfImage.rawValue)
+    }
+
     @objc func didTapBookmarkButton() {
-        print("Post")
+        viewModel.didTapBookmarkButton()
     }
 }

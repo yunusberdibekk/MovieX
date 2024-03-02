@@ -101,7 +101,8 @@ extension HomeViewModel: HomeViewModelProtocol {
     }
 
     func didSelectRow(_ movie: Movie) {
-        guard let titleName = movie.original_title ?? movie.original_name, let request = YTRequest.searchRequest(titleName + "trailer") else { return }
+        guard let titleName = movie.original_title ?? movie.original_name,
+              let request = YTRequest.searchRequest(titleName + "trailer") else { return }
 
         APIClient.shared.execute(request, expecting: YoutubeSearchResponse.self) { [weak self] result in
             switch result {
@@ -113,7 +114,9 @@ extension HomeViewModel: HomeViewModelProtocol {
                     youtubeVideo: videoElement.items.first)
 
                 DispatchQueue.main.async {
-                    self?.view?.push(MovieDetailViewController(movieDetail: movieDetailModel))
+                    self?.view?.push(MovieDetailViewController(
+                        movie: movie,
+                        movieDetail: movieDetailModel))
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -124,7 +127,12 @@ extension HomeViewModel: HomeViewModelProtocol {
     func didTapDownloadAction(_ movie: Movie?) {
         guard let movie else { return }
 
-        dump(movie)
+        update(.add, movie: movie) { [weak self] error in
+            self?.view?.alert(
+                title: error == nil ? "Congratulations!" : "Error!",
+                message: error == nil ? "Movie added successfully" : error?.description ?? "An error occured.",
+                actionTitle: "OK")
+        }
     }
 
     func titleForHeaderInSection(_ section: Int) -> String? {
@@ -139,3 +147,5 @@ extension HomeViewModel: HomeViewModelProtocol {
         return (view?.frame.width ?? .zero) * 0.1
     }
 }
+
+extension HomeViewModel: DownloadsDefaultsManagerProtocol {}

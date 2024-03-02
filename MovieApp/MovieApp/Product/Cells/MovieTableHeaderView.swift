@@ -52,9 +52,8 @@ final class MovieTableHeaderView: UICollectionViewCell {
 
 extension MovieTableHeaderView {
     public func configure(movie: Movie?) {
-        guard let movie, let path = movie.poster_path, let url = URL(string: "https://image.tmdb.org/t/p/w500/\(path)") else {
-            return
-        }
+        guard let movie, let path = movie.poster_path,
+              let url = URL(string: "https://image.tmdb.org/t/p/w500/\(path)") else { return }
 
         imageView.sd_setImage(with: url, completed: nil)
     }

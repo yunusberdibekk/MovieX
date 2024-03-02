@@ -12,6 +12,9 @@
 		BE7AB3F12B910813002CA593 /* YTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3F02B910813002CA593 /* YTRequest.swift */; };
 		BE7AB3F32B9108C3002CA593 /* YTEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3F22B9108C3002CA593 /* YTEndpoint.swift */; };
 		BE7AB3F62B912543002CA593 /* Pushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3F52B912543002CA593 /* Pushable.swift */; };
+		BE7AB3FA2B9268AF002CA593 /* DownloadsDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3F92B9268AF002CA593 /* DownloadsDefaultsManager.swift */; };
+		BE7AB3FC2B929F61002CA593 /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3FB2B929F61002CA593 /* Alertable.swift */; };
+		BE7AB3FE2B929F69002CA593 /* Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3FD2B929F69002CA593 /* Presentable.swift */; };
 		BE8FB97D2B8D8C5D0002E706 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB97C2B8D8C5D0002E706 /* AppDelegate.swift */; };
 		BE8FB97F2B8D8C5D0002E706 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB97E2B8D8C5D0002E706 /* SceneDelegate.swift */; };
 		BE8FB9812B8D8C5D0002E706 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB9802B8D8C5D0002E706 /* HomeViewController.swift */; };
@@ -42,6 +45,9 @@
 		BE7AB3F02B910813002CA593 /* YTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTRequest.swift; sourceTree = "<group>"; };
 		BE7AB3F22B9108C3002CA593 /* YTEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTEndpoint.swift; sourceTree = "<group>"; };
 		BE7AB3F52B912543002CA593 /* Pushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pushable.swift; sourceTree = "<group>"; };
+		BE7AB3F92B9268AF002CA593 /* DownloadsDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsDefaultsManager.swift; sourceTree = "<group>"; };
+		BE7AB3FB2B929F61002CA593 /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
+		BE7AB3FD2B929F69002CA593 /* Presentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentable.swift; sourceTree = "<group>"; };
 		BE8FB9792B8D8C5D0002E706 /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8FB97C2B8D8C5D0002E706 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE8FB97E2B8D8C5D0002E706 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +89,8 @@
 			isa = PBXGroup;
 			children = (
 				BE7AB3F52B912543002CA593 /* Pushable.swift */,
+				BE7AB3FB2B929F61002CA593 /* Alertable.swift */,
+				BE7AB3FD2B929F69002CA593 /* Presentable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -102,6 +110,7 @@
 		BE7AB3F82B914B9D002CA593 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				BE7AB3F92B9268AF002CA593 /* DownloadsDefaultsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -376,10 +385,13 @@
 				BE8FB9CF2B8ED1D40002E706 /* TopSearchesViewController.swift in Sources */,
 				BE8FB9AA2B8EAC5E0002E706 /* MovieCollectionViewCell.swift in Sources */,
 				BE8FB9C72B8ED1600002E706 /* SFSymbols.swift in Sources */,
+				BE7AB3FA2B9268AF002CA593 /* DownloadsDefaultsManager.swift in Sources */,
 				BE8FB9A82B8EAC4F0002E706 /* MovieTableViewCell.swift in Sources */,
 				BE7AB3F32B9108C3002CA593 /* YTEndpoint.swift in Sources */,
 				BE8FB9B42B8EBE840002E706 /* APIRequest.swift in Sources */,
+				BE7AB3FE2B929F69002CA593 /* Presentable.swift in Sources */,
 				BE8FB97F2B8D8C5D0002E706 /* SceneDelegate.swift in Sources */,
+				BE7AB3FC2B929F61002CA593 /* Alertable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
