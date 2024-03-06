@@ -13,7 +13,6 @@ protocol HomeViewControllerProtocol: Pushable, Alertable, AnyObject {
 
     func prepareViewController()
     func prepareTableView()
-    func push(_ controller: UIViewController)
 }
 
 final class HomeViewController: UIViewController {

@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		BE7AB3EB2B90F308002CA593 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3EA2B90F308002CA593 /* MovieDetail.swift */; };
 		BE7AB3ED2B90F385002CA593 /* YoutubeSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3EC2B90F385002CA593 /* YoutubeSearchResponse.swift */; };
-		BE7AB3F12B910813002CA593 /* YTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3F02B910813002CA593 /* YTRequest.swift */; };
-		BE7AB3F32B9108C3002CA593 /* YTEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3F22B9108C3002CA593 /* YTEndpoint.swift */; };
 		BE7AB3F62B912543002CA593 /* Pushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3F52B912543002CA593 /* Pushable.swift */; };
 		BE7AB3FA2B9268AF002CA593 /* DownloadsDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3F92B9268AF002CA593 /* DownloadsDefaultsManager.swift */; };
 		BE7AB3FC2B929F61002CA593 /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7AB3FB2B929F61002CA593 /* Alertable.swift */; };
@@ -37,13 +35,13 @@
 		BE8FB9D32B8ED2210002E706 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB9D22B8ED2210002E706 /* RootTabBarController.swift */; };
 		BE8FB9D62B8FA9690002E706 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB9D52B8FA9690002E706 /* MovieDetailViewController.swift */; };
 		BE8FB9DA2B8FA9F60002E706 /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB9D92B8FA9F60002E706 /* MovieDetailViewModel.swift */; };
+		BEF218C62B98EC28006D9145 /* TMDBRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF218C52B98EC28006D9145 /* TMDBRequest.swift */; };
+		BEF218C82B98EC40006D9145 /* YTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF218C72B98EC40006D9145 /* YTRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BE7AB3EA2B90F308002CA593 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		BE7AB3EC2B90F385002CA593 /* YoutubeSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeSearchResponse.swift; sourceTree = "<group>"; };
-		BE7AB3F02B910813002CA593 /* YTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTRequest.swift; sourceTree = "<group>"; };
-		BE7AB3F22B9108C3002CA593 /* YTEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTEndpoint.swift; sourceTree = "<group>"; };
 		BE7AB3F52B912543002CA593 /* Pushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pushable.swift; sourceTree = "<group>"; };
 		BE7AB3F92B9268AF002CA593 /* DownloadsDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsDefaultsManager.swift; sourceTree = "<group>"; };
 		BE7AB3FB2B929F61002CA593 /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
@@ -70,6 +68,8 @@
 		BE8FB9D22B8ED2210002E706 /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarController.swift; sourceTree = "<group>"; };
 		BE8FB9D52B8FA9690002E706 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		BE8FB9D92B8FA9F60002E706 /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
+		BEF218C52B98EC28006D9145 /* TMDBRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBRequest.swift; sourceTree = "<group>"; };
+		BEF218C72B98EC40006D9145 /* YTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +99,10 @@
 			isa = PBXGroup;
 			children = (
 				BE8FB9AF2B8EBBB70002E706 /* APIClient.swift */,
-				BE8FB9B32B8EBE840002E706 /* APIRequest.swift */,
 				BE8FB9B12B8EBE7E0002E706 /* APIEndpoint.swift */,
-				BE7AB3F02B910813002CA593 /* YTRequest.swift */,
-				BE7AB3F22B9108C3002CA593 /* YTEndpoint.swift */,
+				BE8FB9B32B8EBE840002E706 /* APIRequest.swift */,
+				BEF218C72B98EC40006D9145 /* YTRequest.swift */,
+				BEF218C52B98EC28006D9145 /* TMDBRequest.swift */,
 			);
 			path = APIClient;
 			sourceTree = "<group>";
@@ -373,12 +373,13 @@
 				BE8FB9B22B8EBE7E0002E706 /* APIEndpoint.swift in Sources */,
 				BE7AB3F62B912543002CA593 /* Pushable.swift in Sources */,
 				BE8FB9AE2B8EB79E0002E706 /* MovieTableHeaderView.swift in Sources */,
+				BEF218C62B98EC28006D9145 /* TMDBRequest.swift in Sources */,
+				BEF218C82B98EC40006D9145 /* YTRequest.swift in Sources */,
 				BE8FB9D12B8ED1D90002E706 /* DownloadsViewController.swift in Sources */,
 				BE8FB9D62B8FA9690002E706 /* MovieDetailViewController.swift in Sources */,
 				BE7AB3ED2B90F385002CA593 /* YoutubeSearchResponse.swift in Sources */,
 				BE8FB9D32B8ED2210002E706 /* RootTabBarController.swift in Sources */,
 				BE8FB9DA2B8FA9F60002E706 /* MovieDetailViewModel.swift in Sources */,
-				BE7AB3F12B910813002CA593 /* YTRequest.swift in Sources */,
 				BE8FB97D2B8D8C5D0002E706 /* AppDelegate.swift in Sources */,
 				BE8FB9AC2B8EAD630002E706 /* MovieResponse.swift in Sources */,
 				BE8FB9B02B8EBBB70002E706 /* APIClient.swift in Sources */,
@@ -387,7 +388,6 @@
 				BE8FB9C72B8ED1600002E706 /* SFSymbols.swift in Sources */,
 				BE7AB3FA2B9268AF002CA593 /* DownloadsDefaultsManager.swift in Sources */,
 				BE8FB9A82B8EAC4F0002E706 /* MovieTableViewCell.swift in Sources */,
-				BE7AB3F32B9108C3002CA593 /* YTEndpoint.swift in Sources */,
 				BE8FB9B42B8EBE840002E706 /* APIRequest.swift in Sources */,
 				BE7AB3FE2B929F69002CA593 /* Presentable.swift in Sources */,
 				BE8FB97F2B8D8C5D0002E706 /* SceneDelegate.swift in Sources */,

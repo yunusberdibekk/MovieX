@@ -59,8 +59,7 @@ extension HomeViewModel: HomeViewModelProtocol {
     func viewWillAppear() {}
 
     func tableHeaderView() {
-        let request = APIRequest.fetchTrendingMovies.urlRequest
-        APIClient.shared.execute(request, expecting: MovieResponse.self) { [weak self] result in
+        APIClient.shared.execute(TMDBRequest.fetchTrendingMovies.urlRequest(), expecting: MovieResponse.self) { [weak self] result in
             switch result {
             case .success(let movies):
                 self?.view?.movieTableHeaderView?.configure(movie: movies.results.randomElement())
@@ -83,28 +82,40 @@ extension HomeViewModel: HomeViewModelProtocol {
 
         switch section {
         case .trendingTv:
-            let request = APIRequest.fetchTrendingTvSeries.urlRequest
-            APIClient.shared.execute(request, expecting: MovieResponse.self, completion: completion)
+            APIClient.shared.execute(
+                TMDBRequest.fetchTrendingTvSeries.urlRequest(),
+                expecting: MovieResponse.self,
+                completion: completion)
         case .trendingMovie:
-            let request = APIRequest.fetchTrendingMovies.urlRequest
-            APIClient.shared.execute(request, expecting: MovieResponse.self, completion: completion)
+            APIClient.shared.execute(
+                TMDBRequest.fetchTrendingMovies.urlRequest(),
+                expecting: MovieResponse.self,
+                completion: completion)
         case .upcoming:
-            let request = APIRequest.fetchUpcomingMovies.urlRequest
-            APIClient.shared.execute(request, expecting: MovieResponse.self, completion: completion)
+            APIClient.shared.execute(
+                TMDBRequest.fetchUpcomingMovies.urlRequest(),
+                expecting: MovieResponse.self,
+                completion: completion)
         case .popular:
-            let request = APIRequest.fetchPopularMovies.urlRequest
-            APIClient.shared.execute(request, expecting: MovieResponse.self, completion: completion)
+            APIClient.shared.execute(
+                TMDBRequest.fetchPopularMovies.urlRequest(),
+                expecting: MovieResponse.self,
+                completion: completion)
         case .topRated:
-            let request = APIRequest.fetchTopRatedMovies.urlRequest
-            APIClient.shared.execute(request, expecting: MovieResponse.self, completion: completion)
+            APIClient.shared.execute(
+                TMDBRequest.fetchTopRatedMovies.urlRequest(),
+                expecting: MovieResponse.self,
+                completion: completion)
         }
     }
 
     func didSelectRow(_ movie: Movie) {
-        guard let titleName = movie.original_title ?? movie.original_name,
-              let request = YTRequest.searchRequest(titleName + "trailer") else { return }
-
-        APIClient.shared.execute(request, expecting: YoutubeSearchResponse.self) { [weak self] result in
+        guard let titleName = movie.original_title ?? movie.original_name else { return }
+        let request = YTRequest.searchRequest(titleName + "trailer").urlRequest()
+        dump(request)
+        APIClient.shared.execute(request,
+                                 expecting: YoutubeSearchResponse.self)
+        { [weak self] result in
             switch result {
             case .success(let videoElement):
                 let movieDetailModel = MovieDetail(
@@ -119,7 +130,8 @@ extension HomeViewModel: HomeViewModelProtocol {
                         movieDetail: movieDetailModel))
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                print("leooo")
+                print(error.description)
             }
         }
     }

@@ -14,4 +14,6 @@ import Foundation
     case discover
     case search
     case original
+
+    case youtube
 }
