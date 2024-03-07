@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class MovieTableHeaderView: UICollectionViewCell {
-    static let identifier: String = "MovieTableHeaderView"
+final class HomeMovieTableHeaderView: UICollectionViewCell {
+    static let identifier: String = "HomeMovieTableHeaderView"
 
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -50,7 +50,7 @@ final class MovieTableHeaderView: UICollectionViewCell {
     }
 }
 
-extension MovieTableHeaderView {
+extension HomeMovieTableHeaderView {
     public func configure(movie: Movie?) {
         guard let movie, let path = movie.poster_path,
               let url = URL(string: "https://image.tmdb.org/t/p/w500/\(path)") else { return }

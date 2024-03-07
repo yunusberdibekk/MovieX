@@ -1,5 +1,5 @@
 //
-//  MovieCollectionViewCell.swift
+//  HomeMovieCollectionCell.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 28.02.2024.
@@ -8,8 +8,8 @@
 import SDWebImage
 import UIKit
 
-final class MovieCollectionViewCell: UICollectionViewCell {
-    static let identifier: String = "MovieCollectionViewCell"
+final class HomeMovieCollectionCell: UICollectionViewCell {
+    static let identifier: String = "HomeMovieCollectionCell"
 
     private let movieImageView: UIImageView = {
         let imageView = UIImageView()
@@ -41,7 +41,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension MovieCollectionViewCell {
+extension HomeMovieCollectionCell {
     public func configure(movie: Movie) {
         guard let path = movie.poster_path, let url = URL(string: "https://image.tmdb.org/t/p/w500/\(path)") else {
             return

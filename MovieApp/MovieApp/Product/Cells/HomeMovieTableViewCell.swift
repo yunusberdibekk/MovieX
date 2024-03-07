@@ -7,16 +7,16 @@
 
 import UIKit
 
-protocol MovieTableViewCellProtocol: AnyObject {
+protocol HomeMovieTableViewCellProtocol: AnyObject {
     func didSelectRow(_ movie: Movie)
     func didTapDownloadAction(_ movie: Movie?)
 }
 
-final class MovieTableViewCell: UITableViewCell {
-    static let identifier: String = "MovieTableViewCell"
+final class HomeMovieTableViewCell: UITableViewCell {
+    static let identifier: String = "HomeMovieTableViewCell"
     private var movies: [Movie] = []
 
-    weak var delegate: MovieTableViewCellProtocol?
+    weak var delegate: HomeMovieTableViewCellProtocol?
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -25,8 +25,8 @@ final class MovieTableViewCell: UITableViewCell {
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(
-            MovieCollectionViewCell.self,
-            forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
+            HomeMovieCollectionCell.self,
+            forCellWithReuseIdentifier: HomeMovieCollectionCell.identifier)
         return collectionView
     }()
 
@@ -63,7 +63,7 @@ final class MovieTableViewCell: UITableViewCell {
     }
 }
 
-extension MovieTableViewCell {
+extension HomeMovieTableViewCell {
     public func configure(with movies: [Movie]) {
         self.movies = movies
         DispatchQueue.main.async { [weak self] in
@@ -72,22 +72,22 @@ extension MovieTableViewCell {
     }
 }
 
-extension MovieTableViewCell: UICollectionViewDataSource {
+extension HomeMovieTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         movies.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MovieCollectionViewCell.identifier,
-            for: indexPath) as? MovieCollectionViewCell else { fatalError() }
+            withReuseIdentifier: HomeMovieCollectionCell.identifier,
+            for: indexPath) as? HomeMovieCollectionCell else { fatalError() }
 
         cell.configure(movie: movies[indexPath.row])
         return cell
     }
 }
 
-extension MovieTableViewCell: UICollectionViewDelegate {
+extension HomeMovieTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         delegate?.didSelectRow(movies[indexPath.row])

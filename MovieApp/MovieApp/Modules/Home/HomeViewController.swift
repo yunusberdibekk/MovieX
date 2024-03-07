@@ -8,7 +8,7 @@
 import UIKit
 
 protocol HomeViewControllerProtocol: Pushable, Alertable, AnyObject {
-    var movieTableHeaderView: MovieTableHeaderView? { get set }
+    var movieTableHeaderView: HomeMovieTableHeaderView? { get set }
     var frame: CGRect { get }
 
     func prepareViewController()
@@ -17,14 +17,14 @@ protocol HomeViewControllerProtocol: Pushable, Alertable, AnyObject {
 
 final class HomeViewController: UIViewController {
     private lazy var viewModel: HomeViewModelProtocol = HomeViewModel()
-    var movieTableHeaderView: MovieTableHeaderView?
+    var movieTableHeaderView: HomeMovieTableHeaderView?
 
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(
-            MovieTableViewCell.self,
-            forCellReuseIdentifier: MovieTableViewCell.identifier)
+            HomeMovieTableViewCell.self,
+            forCellReuseIdentifier: HomeMovieTableViewCell.identifier)
         return tableView
     }()
 
@@ -46,6 +46,7 @@ extension HomeViewController: HomeViewControllerProtocol {
     }
 
     func prepareViewController() {
+        title = "Home"
         view.backgroundColor = .secondarySystemBackground
     }
 
@@ -55,7 +56,7 @@ extension HomeViewController: HomeViewControllerProtocol {
         tableView.delegate = self
         tableView.dataSource = self
 
-        movieTableHeaderView = MovieTableHeaderView(
+        movieTableHeaderView = HomeMovieTableHeaderView(
             frame: .init(x: .zero, y: .zero, width: view.frame.width, height: view.frame.height * 0.70))
         tableView.tableHeaderView = movieTableHeaderView
         viewModel.tableHeaderView()
@@ -88,7 +89,7 @@ extension HomeViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: MovieTableViewCell.identifier, for: indexPath) as? MovieTableViewCell else { fatalError() }
+            withIdentifier: HomeMovieTableViewCell.identifier, for: indexPath) as? HomeMovieTableViewCell else { fatalError() }
 
         cell.delegate = self
         viewModel.cellForRowAt(indexPath.section) { result in
@@ -104,7 +105,7 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
-extension HomeViewController: MovieTableViewCellProtocol {
+extension HomeViewController: HomeMovieTableViewCellProtocol {
     func didSelectRow(_ movie: Movie) {
         viewModel.didSelectRow(movie)
     }

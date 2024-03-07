@@ -112,7 +112,7 @@ extension HomeViewModel: HomeViewModelProtocol {
     func didSelectRow(_ movie: Movie) {
         guard let titleName = movie.original_title ?? movie.original_name else { return }
         let request = YTRequest.searchRequest(titleName + "trailer").urlRequest()
-        dump(request)
+
         APIClient.shared.execute(request,
                                  expecting: YoutubeSearchResponse.self)
         { [weak self] result in
@@ -130,7 +130,6 @@ extension HomeViewModel: HomeViewModelProtocol {
                         movieDetail: movieDetailModel))
                 }
             case .failure(let error):
-                print("leooo")
                 print(error.description)
             }
         }

@@ -55,7 +55,7 @@ final class RootTabBarController: UITabBarController {
             title: title,
             image: UIImage(systemName: image.rawValue),
             tag: tag)
-        navVC.navigationItem.largeTitleDisplayMode = .automatic
+        navVC.navigationItem.largeTitleDisplayMode = !prefersLargeTitles ? .inline : .automatic
         navVC.navigationBar.prefersLargeTitles = prefersLargeTitles ? true : false
 
         return navVC
