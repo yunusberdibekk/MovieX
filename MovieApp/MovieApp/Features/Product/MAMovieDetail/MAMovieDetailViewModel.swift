@@ -1,5 +1,5 @@
 //
-//  MovieDetailViewModel.swift
+//  MAMovieDetailViewModel.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 28.02.2024.
@@ -7,22 +7,30 @@
 
 import Foundation
 
-protocol MovieDetailViewModelProtocol {
-    var view: MovieDetailViewControllerProtocol? { get set }
-    var movieDetail: MovieDetail { get set }
+protocol MAMovieDetailViewModelProtocol {
+    // MARK: - Variables
+
+    var view: MAMovieDetailViewControllerProtocol? { get set }
+    var movieDetail: MAMovieDetail { get set }
     var movie: Movie { get set }
+
+    // MARK: - Functions
 
     func viewDidLoad()
     func viewWillAppear()
     func didTapBookmarkButton()
 }
 
-final class MovieDetailViewModel {
-    weak var view: MovieDetailViewControllerProtocol?
-    var movie: Movie
-    var movieDetail: MovieDetail
+final class MAMovieDetailViewModel: MAUserDefaultsManager {
+    // MARK: - Variables
 
-    init(movie: Movie, movieDetail: MovieDetail) {
+    weak var view: MAMovieDetailViewControllerProtocol?
+    var movie: Movie
+    var movieDetail: MAMovieDetail
+
+    // MARK: - Lifecycle
+
+    init(movie: Movie, movieDetail: MAMovieDetail) {
         self.movie = movie
         self.movieDetail = movieDetail
     }
@@ -43,7 +51,9 @@ final class MovieDetailViewModel {
     }
 }
 
-extension MovieDetailViewModel: MovieDetailViewModelProtocol {
+// MARK: -  ViewModel + MAMovieDetailViewModel
+
+extension MAMovieDetailViewModel: MAMovieDetailViewModelProtocol {
     func viewDidLoad() {
         prepareLabels()
         prepareWebView()
@@ -71,5 +81,3 @@ extension MovieDetailViewModel: MovieDetailViewModelProtocol {
         }
     }
 }
-
-extension MovieDetailViewModel: DownloadsDefaultsManagerProtocol {}

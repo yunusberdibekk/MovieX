@@ -1,5 +1,5 @@
 //
-//  YoutubeSearchResponse.swift
+//  MAYoutubeSearchResponse.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 29.02.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct YoutubeSearchResponse: Codable {
+struct MAYoutubeSearchResponse: Codable {
     let items: [VideoElement]
 }
 

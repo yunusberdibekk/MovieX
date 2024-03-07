@@ -1,5 +1,5 @@
 //
-//  RootViewController.swift
+//  MARootTabBarController.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 28.02.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RootTabBarController: UITabBarController {
+final class MARootTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.tintColor = .label
@@ -16,13 +16,13 @@ final class RootTabBarController: UITabBarController {
 
     private func setUpTabBar() {
         let homeNC = createNavigationController(
-            vc: HomeViewController(),
+            vc: MAShowCaseViewController(),
             title: "Home",
             image: .house,
             prefersLargeTitles: false,
             tag: 0)
         let comingSoonNC = createNavigationController(
-            vc: ComingSoonViewController(),
+            vc: MAComingSoonViewController(),
             title: "Coming Soon",
             image: .play_circle,
             prefersLargeTitles: true,
@@ -34,7 +34,7 @@ final class RootTabBarController: UITabBarController {
             prefersLargeTitles: true,
             tag: 2)
         let downloadsNC = createNavigationController(
-            vc: DownloadsViewController(),
+            vc: MADownloadsViewController(),
             title: "Downloads",
             image: .arrow_down_to_line,
             prefersLargeTitles: true,

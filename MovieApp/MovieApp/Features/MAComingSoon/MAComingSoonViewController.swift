@@ -1,5 +1,5 @@
 //
-//  DownloadsViewController.swift
+//  ComingSoonViewController.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 28.02.2024.
@@ -7,31 +7,40 @@
 
 import UIKit
 
-protocol DownloadsViewControllerProtocol: AnyObject, Pushable {
+protocol MAComingSoonViewControllerProtocol: AnyObject, Pushable {
+    // MARK: - Variables
+
     var frame: CGRect { get }
+
+    // MARK: - Functions
 
     func prepareView()
     func prepareCollectionView()
     func reloadCollectionView()
 }
 
-final class DownloadsViewController: UIViewController {
-    private lazy var viewModel: DownloadsViewModelProtocol = DownloadsViewModel()
+// MARK: - Pagination eklenecek.
 
-    var frame: CGRect {
-        view.frame
-    }
+final class MAComingSoonViewController: UIViewController {
+    // MARK: - Variables
+
+    private lazy var viewModel: MAComingSoonViewModelProtocol = MAComingSoonViewModel()
+
+    // MARK: - UI Components
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
+
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(MovieCollectionCell.self,
-                                forCellWithReuseIdentifier: MovieCollectionCell.identifier)
+        collectionView.register(MAMovieCollectionCell.self,
+                                forCellWithReuseIdentifier: MAMovieCollectionCell.identifier)
         return collectionView
     }()
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,14 +49,21 @@ final class DownloadsViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         viewModel.viewWillAppear()
     }
 }
 
-extension DownloadsViewController: DownloadsViewControllerProtocol {
+// MARK: -  Controller + MAComingSoonViewControllerProtocol
+
+extension MAComingSoonViewController: MAComingSoonViewControllerProtocol {
+    var frame: CGRect {
+        view.frame
+    }
+
     func prepareView() {
         view.backgroundColor = .systemBackground
-        title = "Downloads"
+        title = "Coming Soon"
     }
 
     func prepareCollectionView() {
@@ -68,14 +84,20 @@ extension DownloadsViewController: DownloadsViewControllerProtocol {
     }
 }
 
-extension DownloadsViewController: UICollectionViewDataSource {
+// MARK: -  Controller + UICollectionViewDataSource
+
+extension MAComingSoonViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        viewModel.numberOfSections()
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.numberOfItemsInSection()
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionCell.identifier,
-                                                            for: indexPath) as? MovieCollectionCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MAMovieCollectionCell.identifier,
+                                                            for: indexPath) as? MAMovieCollectionCell
         else {
             fatalError()
         }
@@ -90,21 +112,25 @@ extension DownloadsViewController: UICollectionViewDataSource {
     }
 }
 
-extension DownloadsViewController: UICollectionViewDelegate {
+// MARK: -  Controller + UICollectionViewDelegate
+
+extension MAComingSoonViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
-            let deleteAction = UIAction(title: "Delete", state: .off) { _ in
+            let downloadAction = UIAction(title: "Download", state: .off) { _ in
                 if let indexPath = indexPaths.first {
-                    self?.viewModel.didTapDeleteAction(indexPath.row)
+                    self?.viewModel.didSelectContextMenuConfiguration(indexPath.row)
                 }
             }
-            return .init(title: "", options: .destructive, children: [deleteAction])
+            return .init(title: "", options: .destructive, children: [downloadAction])
         }
         return config
     }
 }
 
-extension DownloadsViewController: UICollectionViewDelegateFlowLayout {
+// MARK: -  Controller + UICollectionViewDelegateFlowLayout
+
+extension MAComingSoonViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         viewModel.sizeForItemAt()
     }

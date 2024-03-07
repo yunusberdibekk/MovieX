@@ -1,5 +1,5 @@
 //
-//  HomeMovieCollectionCell.swift
+//  MAShowCaseCollectionCell.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 28.02.2024.
@@ -8,8 +8,12 @@
 import SDWebImage
 import UIKit
 
-final class HomeMovieCollectionCell: UICollectionViewCell {
-    static let identifier: String = "HomeMovieCollectionCell"
+final class MAShowCaseCollectionCell: UICollectionViewCell {
+    // MARK: - Variables
+
+    static let identifier: String = "MAShowCaseCollectionCell"
+
+    // MARK: - UI Components
 
     private let movieImageView: UIImageView = {
         let imageView = UIImageView()
@@ -18,6 +22,8 @@ final class HomeMovieCollectionCell: UICollectionViewCell {
         imageView.image = UIImage(resource: .defaultCell)
         return imageView
     }()
+
+    // MARK: - Lifecycle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,7 +47,7 @@ final class HomeMovieCollectionCell: UICollectionViewCell {
     }
 }
 
-extension HomeMovieCollectionCell {
+extension MAShowCaseCollectionCell {
     public func configure(movie: Movie) {
         guard let path = movie.poster_path, let url = URL(string: "https://image.tmdb.org/t/p/w500/\(path)") else {
             return

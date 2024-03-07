@@ -14,26 +14,6 @@ protocol APIClientProtocol {
                              expecting type: T.Type, completion: @escaping (Result<T, APIClientError>) -> Void)
 }
 
-enum APIClientError: Error {
-    case invalidRequest(msg: String)
-    case invalidResponse(msg: String)
-    case invalidStatusCode(code: String)
-    case invalidDecoding(msg: String)
-
-    var description: String {
-        switch self {
-        case .invalidRequest(let msg):
-            "@MXClient: Network Request Error: \(msg)"
-        case .invalidResponse(let msg):
-            "@MXClient: Invalid Response or No HTTP Response Error: \(msg)"
-        case .invalidStatusCode(let code):
-            "@MXClient: Invalid HTTP Status Code: \(code)"
-        case .invalidDecoding(let msg):
-            "@MXClient: JSON Decoding Error: \(msg)"
-        }
-    }
-}
-
 final class APIClient {
     static let shared: APIClient = .init()
 
@@ -80,5 +60,25 @@ extension APIClient: APIClientProtocol {
         }
 
         task.resume()
+    }
+}
+
+enum APIClientError: Error {
+    case invalidRequest(msg: String)
+    case invalidResponse(msg: String)
+    case invalidStatusCode(code: String)
+    case invalidDecoding(msg: String)
+
+    var description: String {
+        switch self {
+        case .invalidRequest(let msg):
+            "@MXClient: Network Request Error: \(msg)"
+        case .invalidResponse(let msg):
+            "@MXClient: Invalid Response or No HTTP Response Error: \(msg)"
+        case .invalidStatusCode(let code):
+            "@MXClient: Invalid HTTP Status Code: \(code)"
+        case .invalidDecoding(let msg):
+            "@MXClient: JSON Decoding Error: \(msg)"
+        }
     }
 }

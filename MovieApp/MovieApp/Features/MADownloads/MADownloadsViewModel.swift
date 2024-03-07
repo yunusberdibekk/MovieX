@@ -7,20 +7,28 @@
 
 import Foundation
 
-protocol DownloadsViewModelProtocol {
-    var view: DownloadsViewControllerProtocol? { get set }
+protocol MADownloadsViewModelProtocol {
+    // MARK: - Variables
+
+    var view: MADownloadsViewControllerProtocol? { get set }
+
+    // MARK: - Functions
 
     func viewDidLoad()
     func viewWillAppear()
-    func numberOfItemsInSection() -> Int
-    func cellForRowAt(_ index: Int) -> Movie
     func didSelectItemAt(_ index: Int)
     func sizeForItemAt() -> CGSize
-    func didTapDeleteAction(_ index: Int)
+    func didSelectContextMenuConfiguration(_ index: Int)
+
+    func numberOfItemsInSection() -> Int
+    func numberOfSections() -> Int
+    func cellForRowAt(_ index: Int) -> Movie
 }
 
-final class DownloadsViewModel: DownloadsViewModelProtocol {
-    weak var view: DownloadsViewControllerProtocol?
+class MADownloadsViewModel: MAUserDefaultsManager {
+    // MARK: - Variables
+
+    weak var view: MADownloadsViewControllerProtocol?
     private var movies: [Movie] = []
 
     private func fetchMovies() {
@@ -36,7 +44,9 @@ final class DownloadsViewModel: DownloadsViewModelProtocol {
     }
 }
 
-extension DownloadsViewModel {
+// MARK: - ViewModel + MADownloadsViewModelProtocol
+
+extension MADownloadsViewModel: MADownloadsViewModelProtocol {
     func viewDidLoad() {
         view?.prepareView()
         view?.prepareCollectionView()
@@ -46,34 +56,24 @@ extension DownloadsViewModel {
         fetchMovies()
     }
 
-    func numberOfItemsInSection() -> Int {
-        movies.count
-    }
-
-    func cellForRowAt(_ index: Int) -> Movie {
-        movies[index]
-    }
-
     func didSelectItemAt(_ index: Int) {
         let movie = movies[index]
         guard let titleName = movie.original_title ?? movie.original_name else { return }
         let request = YTRequest.searchRequest(titleName + "trailer").urlRequest()
 
         APIClient.shared.execute(request,
-                                 expecting: YoutubeSearchResponse.self)
+                                 expecting: MAYoutubeSearchResponse.self)
         { [weak self] result in
             switch result {
             case .success(let videoElement):
-                let movieDetailModel = MovieDetail(
+                let movieDetailModel = MAMovieDetail(
                     id: movie.id,
                     title: movie.original_title ?? movie.original_name,
                     overview: movie.overview,
                     youtubeVideo: videoElement.items.first)
 
                 DispatchQueue.main.async {
-                    self?.view?.push(MovieDetailViewController(
-                        movie: movie,
-                        movieDetail: movieDetailModel))
+                    self?.view?.push(MAMovieDetailViewController(movie: movie, movieDetail: movieDetailModel))
                 }
             case .failure(let error):
                 print(error.description)
@@ -87,7 +87,7 @@ extension DownloadsViewModel {
         return CGSize(width: view.frame.width, height: view.frame.width * 0.318)
     }
 
-    func didTapDeleteAction(_ index: Int) {
+    func didSelectContextMenuConfiguration(_ index: Int) {
         let movie = movies[index]
 
         update(.remove, movie: movie) { [weak self] error in
@@ -97,6 +97,16 @@ extension DownloadsViewModel {
             self?.view?.reloadCollectionView()
         }
     }
-}
 
-extension DownloadsViewModel: DownloadsDefaultsManagerProtocol {}
+    func numberOfItemsInSection() -> Int {
+        movies.count
+    }
+
+    func numberOfSections() -> Int {
+        1
+    }
+
+    func cellForRowAt(_ index: Int) -> Movie {
+        movies[index]
+    }
+}

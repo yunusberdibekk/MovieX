@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  MAShowCaseViewController.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 27.02.2024.
@@ -7,26 +7,37 @@
 
 import UIKit
 
-protocol HomeViewControllerProtocol: Pushable, Alertable, AnyObject {
-    var movieTableHeaderView: HomeMovieTableHeaderView? { get set }
+protocol MAShowCaseViewControllerProtocol: AnyObject, Pushable, Alertable {
+    // MARK: - Variables
+
+    var movieTableHeaderView: MAShowCaseTableHeaderView? { get set }
     var frame: CGRect { get }
+
+    // MARK: - Functions
 
     func prepareViewController()
     func prepareTableView()
 }
 
-final class HomeViewController: UIViewController {
-    private lazy var viewModel: HomeViewModelProtocol = HomeViewModel()
-    var movieTableHeaderView: HomeMovieTableHeaderView?
+final class MAShowCaseViewController: UIViewController {
+    // MARK: - Variables
+
+    private lazy var viewModel: MAShowCaseViewModelProtocol = MAShowCaseViewModel()
+
+    // MARK: - UI Components
+
+    var movieTableHeaderView: MAShowCaseTableHeaderView?
 
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(
-            HomeMovieTableViewCell.self,
-            forCellReuseIdentifier: HomeMovieTableViewCell.identifier)
+            MAShowCaseTableViewCell.self,
+            forCellReuseIdentifier: MAShowCaseTableViewCell.identifier)
         return tableView
     }()
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +51,9 @@ final class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: HomeViewControllerProtocol {
+// MARK: - Controller + MAShowCaseViewControllerDelegate
+
+extension MAShowCaseViewController: MAShowCaseViewControllerProtocol {
     var frame: CGRect {
         view.frame
     }
@@ -56,10 +69,10 @@ extension HomeViewController: HomeViewControllerProtocol {
         tableView.delegate = self
         tableView.dataSource = self
 
-        movieTableHeaderView = HomeMovieTableHeaderView(
+        movieTableHeaderView = MAShowCaseTableHeaderView(
             frame: .init(x: .zero, y: .zero, width: view.frame.width, height: view.frame.height * 0.70))
         tableView.tableHeaderView = movieTableHeaderView
-        viewModel.tableHeaderView()
+        viewModel.viewForHeader()
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(
@@ -78,7 +91,9 @@ extension HomeViewController: HomeViewControllerProtocol {
     }
 }
 
-extension HomeViewController: UITableViewDataSource {
+// MARK: - Controller + UITableViewDataSource
+
+extension MAShowCaseViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         viewModel.numberOfSections()
     }
@@ -89,7 +104,7 @@ extension HomeViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: HomeMovieTableViewCell.identifier, for: indexPath) as? HomeMovieTableViewCell else { fatalError() }
+            withIdentifier: MAShowCaseTableViewCell.identifier, for: indexPath) as? MAShowCaseTableViewCell else { fatalError() }
 
         cell.delegate = self
         viewModel.cellForRowAt(indexPath.section) { result in
@@ -105,26 +120,30 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
-extension HomeViewController: HomeMovieTableViewCellProtocol {
-    func didSelectRow(_ movie: Movie) {
-        viewModel.didSelectRow(movie)
-    }
+// MARK: - Controller + UITableViewDelegate
 
-    func didTapDownloadAction(_ movie: Movie?) {
-        viewModel.didTapDownloadAction(movie)
-    }
-}
-
-extension HomeViewController: UITableViewDelegate {
+extension MAShowCaseViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         viewModel.heightForRowAt()
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        viewModel.heightForHeaderInSection()
+        viewModel.heightForRowInSection()
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         viewModel.titleForHeaderInSection(section)
+    }
+}
+
+// MARK: - Controller + HomeMovieTableViewCellProtocol
+
+extension MAShowCaseViewController: MAShowCaseTableViewCellProtocol {
+    func didSelectRow(_ movie: Movie) {
+        viewModel.didSelectRowAt(movie)
+    }
+
+    func didTapDownloadAction(_ movie: Movie?) {
+        viewModel.didSelectContextMenuConfiguration(movie)
     }
 }

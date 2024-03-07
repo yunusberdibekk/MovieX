@@ -1,5 +1,5 @@
 //
-//  Movie.swift
+//  MAMovieResponse.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 28.02.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieResponse: Codable {
+struct MAMovieResponse: Codable {
     let page: Int
     let results: [Movie]
     let totalPages, totalResults: Int

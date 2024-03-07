@@ -1,5 +1,5 @@
 //
-//  MovieTableHeaderView.swift
+//  MAShowCaseTableHeaderView.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 28.02.2024.
@@ -7,8 +7,12 @@
 
 import UIKit
 
-final class HomeMovieTableHeaderView: UICollectionViewCell {
-    static let identifier: String = "HomeMovieTableHeaderView"
+final class MAShowCaseTableHeaderView: UICollectionViewCell {
+    // MARK: - Variables
+
+    static let identifier: String = "MAShowCaseTableHeaderView"
+
+    // MARK: -  UI Components
 
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -16,6 +20,8 @@ final class HomeMovieTableHeaderView: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+
+    // MARK: - Lifecycle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,7 +56,7 @@ final class HomeMovieTableHeaderView: UICollectionViewCell {
     }
 }
 
-extension HomeMovieTableHeaderView {
+extension MAShowCaseTableHeaderView {
     public func configure(movie: Movie?) {
         guard let movie, let path = movie.poster_path,
               let url = URL(string: "https://image.tmdb.org/t/p/w500/\(path)") else { return }

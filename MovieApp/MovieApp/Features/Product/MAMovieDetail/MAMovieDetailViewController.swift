@@ -1,5 +1,5 @@
 //
-//  MovieDetailViewController.swift
+//  MAMovieDetailViewController.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 28.02.2024.
@@ -8,10 +8,14 @@
 import UIKit
 import WebKit
 
-protocol MovieDetailViewControllerProtocol: Alertable, AnyObject {
+protocol MAMovieDetailViewControllerProtocol: Alertable, AnyObject {
+    // MARK: - Variables
+
     var webView: WKWebView { get }
     var titleLabel: UILabel { get }
     var overviewLabel: UILabel { get }
+
+    // MARK: - Functions
 
     func prepareNavigationBar()
     func prepareWebView()
@@ -19,8 +23,12 @@ protocol MovieDetailViewControllerProtocol: Alertable, AnyObject {
     func updateBookmarkImage(_ sfImage: SFSymbols)
 }
 
-final class MovieDetailViewController: UIViewController {
-    private var viewModel: MovieDetailViewModelProtocol
+final class MAMovieDetailViewController: UIViewController {
+    // MARK: - Variables
+
+    private var viewModel: MAMovieDetailViewModelProtocol
+
+    // MARK: - UI Components
 
     let webView: WKWebView = {
         let webView = WKWebView()
@@ -47,8 +55,10 @@ final class MovieDetailViewController: UIViewController {
         return label
     }()
 
-    init(movie: Movie, movieDetail: MovieDetail) {
-        viewModel = MovieDetailViewModel(
+    // MARK: - Lifeycle
+
+    init(movie: Movie, movieDetail: MAMovieDetail) {
+        viewModel = MAMovieDetailViewModel(
             movie: movie,
             movieDetail: movieDetail)
         super.init(nibName: nil, bundle: nil)
@@ -72,7 +82,9 @@ final class MovieDetailViewController: UIViewController {
     }
 }
 
-extension MovieDetailViewController: MovieDetailViewControllerProtocol {
+// MARK: - Controller + MAMovieDetailViewControllerProtocol
+
+extension MAMovieDetailViewController: MAMovieDetailViewControllerProtocol {
     func prepareWebView() {
         view.addSubview(webView)
 

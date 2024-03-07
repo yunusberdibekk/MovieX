@@ -1,5 +1,5 @@
 //
-//  MovieTableViewCell.swift
+//  MAShowCaseTableViewCell.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 28.02.2024.
@@ -7,16 +7,19 @@
 
 import UIKit
 
-protocol HomeMovieTableViewCellProtocol: AnyObject {
+protocol MAShowCaseTableViewCellProtocol: AnyObject {
     func didSelectRow(_ movie: Movie)
     func didTapDownloadAction(_ movie: Movie?)
 }
 
-final class HomeMovieTableViewCell: UITableViewCell {
-    static let identifier: String = "HomeMovieTableViewCell"
+final class MAShowCaseTableViewCell: UITableViewCell {
+    // MARK: - Variables
+
+    static let identifier: String = "MAShowCaseTableViewCell"
+    weak var delegate: MAShowCaseTableViewCellProtocol?
     private var movies: [Movie] = []
 
-    weak var delegate: HomeMovieTableViewCellProtocol?
+    // MARK: -  UI Components
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -25,10 +28,12 @@ final class HomeMovieTableViewCell: UITableViewCell {
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(
-            HomeMovieCollectionCell.self,
-            forCellWithReuseIdentifier: HomeMovieCollectionCell.identifier)
+            MAShowCaseCollectionCell.self,
+            forCellWithReuseIdentifier: MAShowCaseCollectionCell.identifier)
         return collectionView
     }()
+
+    // MARK: -  Lifecycle
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -63,7 +68,7 @@ final class HomeMovieTableViewCell: UITableViewCell {
     }
 }
 
-extension HomeMovieTableViewCell {
+extension MAShowCaseTableViewCell {
     public func configure(with movies: [Movie]) {
         self.movies = movies
         DispatchQueue.main.async { [weak self] in
@@ -72,22 +77,26 @@ extension HomeMovieTableViewCell {
     }
 }
 
-extension HomeMovieTableViewCell: UICollectionViewDataSource {
+// MARK: - TableViewCell + UICollectionViewDataSource
+
+extension MAShowCaseTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         movies.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: HomeMovieCollectionCell.identifier,
-            for: indexPath) as? HomeMovieCollectionCell else { fatalError() }
+            withReuseIdentifier: MAShowCaseCollectionCell.identifier,
+            for: indexPath) as? MAShowCaseCollectionCell else { fatalError() }
 
         cell.configure(movie: movies[indexPath.row])
         return cell
     }
 }
 
-extension HomeMovieTableViewCell: UICollectionViewDelegate {
+// MARK: - TableViewCell + UICollectionViewDelegate
+
+extension MAShowCaseTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         delegate?.didSelectRow(movies[indexPath.row])

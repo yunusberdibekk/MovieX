@@ -1,5 +1,5 @@
 //
-//  MovieCollectionCell.swift
+//  MAMovieCollectionCell.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 6.03.2024.
@@ -8,8 +8,12 @@
 import SDWebImage
 import UIKit
 
-final class MovieCollectionCell: UICollectionViewCell {
-    static let identifier: String = "MovieCollectionCell"
+final class MAMovieCollectionCell: UICollectionViewCell {
+    // MARK: - Variables
+
+    static let identifier: String = "MAMovieCollectionCell"
+
+    // MARK: - UI Components
 
     private let movieImageView: UIImageView = {
         let imageView = UIImageView()
@@ -33,6 +37,8 @@ final class MovieCollectionCell: UICollectionViewCell {
         view.backgroundColor = .secondarySystemBackground
         return view
     }()
+
+    // MARK: -  Lifecycle
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -79,7 +85,7 @@ final class MovieCollectionCell: UICollectionViewCell {
     }
 }
 
-extension MovieCollectionCell {
+extension MAMovieCollectionCell {
     public func configure(with movie: Movie) {
         movieLabel.text = movie.original_title ?? movie.original_name
 

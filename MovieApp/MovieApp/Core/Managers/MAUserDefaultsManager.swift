@@ -1,5 +1,5 @@
 //
-//  DefaultsManager.swift
+//  MAUserDefaultsManager.swift
 //  MovieApp
 //
 //  Created by Yunus Emre Berdibek on 1.03.2024.
@@ -7,33 +7,7 @@
 
 import Foundation
 
-enum UpdateStatus {
-    case add
-    case remove
-}
-
-enum UserDefaultsKey: String {
-    case downloads
-}
-
-enum UserDefaultsError: Error {
-    case unableToDefaults
-    case alreadyInDownloads
-    case invalidData
-
-    var description: String {
-        switch self {
-        case .unableToDefaults:
-            return "@UserDefaultsError: Unable to downloads list."
-        case .alreadyInDownloads:
-            return "@UserDefaultsError: This movie already in downloads list."
-        case .invalidData:
-            return "@UserDefaultsError: Invalid data."
-        }
-    }
-}
-
-protocol DownloadsDefaultsManagerProtocol {
+protocol MAUserDefaultsManager {
     func fetch(_ key: UserDefaultsKey,
                completion: @escaping (Result<[Movie], UserDefaultsError>) -> Void)
 
@@ -49,7 +23,7 @@ protocol DownloadsDefaultsManagerProtocol {
     func remove(_ key: UserDefaultsKey)
 }
 
-extension DownloadsDefaultsManagerProtocol {
+extension MAUserDefaultsManager {
     func fetch(_ key: UserDefaultsKey,
                completion: @escaping (Result<[Movie], UserDefaultsError>) -> Void)
     {
@@ -119,5 +93,31 @@ extension DownloadsDefaultsManagerProtocol {
 
     func remove(_ key: UserDefaultsKey) {
         UserDefaults.standard.removeObject(forKey: key.rawValue)
+    }
+}
+
+enum UpdateStatus {
+    case add
+    case remove
+}
+
+enum UserDefaultsKey: String {
+    case downloads
+}
+
+enum UserDefaultsError: Error {
+    case unableToDefaults
+    case alreadyInDownloads
+    case invalidData
+
+    var description: String {
+        switch self {
+        case .unableToDefaults:
+            return "@UserDefaultsError: Unable to downloads list."
+        case .alreadyInDownloads:
+            return "@UserDefaultsError: This movie already in downloads list."
+        case .invalidData:
+            return "@UserDefaultsError: Invalid data."
+        }
     }
 }
