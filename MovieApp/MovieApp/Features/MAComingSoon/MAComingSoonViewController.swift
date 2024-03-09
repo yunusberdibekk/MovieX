@@ -7,10 +7,13 @@
 
 import UIKit
 
-protocol MAComingSoonViewControllerProtocol: AnyObject, Pushable {
+protocol MAComingSoonViewControllerProtocol: AnyObject, Pushable, Alertable {
     // MARK: - Variables
 
     var frame: CGRect { get }
+    var scroolHeight: CGFloat { get }
+    var contentOffset: CGFloat { get }
+    var totalContentHeight: CGFloat { get }
 
     // MARK: - Functions
 
@@ -37,6 +40,7 @@ final class MAComingSoonViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(MAMovieCollectionCell.self,
                                 forCellWithReuseIdentifier: MAMovieCollectionCell.identifier)
+
         return collectionView
     }()
 
@@ -57,6 +61,18 @@ final class MAComingSoonViewController: UIViewController {
 // MARK: -  Controller + MAComingSoonViewControllerProtocol
 
 extension MAComingSoonViewController: MAComingSoonViewControllerProtocol {
+    var scroolHeight: CGFloat {
+        collectionView.frame.height
+    }
+
+    var contentOffset: CGFloat {
+        collectionView.contentOffset.y
+    }
+
+    var totalContentHeight: CGFloat {
+        collectionView.contentSize.height
+    }
+
     var frame: CGRect {
         view.frame
     }
@@ -96,14 +112,14 @@ extension MAComingSoonViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MAMovieCollectionCell.identifier,
-                                                            for: indexPath) as? MAMovieCollectionCell
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MAMovieCollectionCell.identifier,
+            for: indexPath) as? MAMovieCollectionCell
         else {
             fatalError()
         }
 
         cell.configure(with: viewModel.cellForRowAt(indexPath.row))
-
         return cell
     }
 
@@ -125,6 +141,10 @@ extension MAComingSoonViewController: UICollectionViewDelegate {
             return .init(title: "", options: .destructive, children: [downloadAction])
         }
         return config
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        viewModel.scrollViewDidScroll()
     }
 }
 

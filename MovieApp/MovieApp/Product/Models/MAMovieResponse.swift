@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MAMovieResponse: Codable {
+struct MAMovieResponse: Codable, Equatable {
     let page: Int
     let results: [Movie]
     let totalPages, totalResults: Int
@@ -17,6 +17,10 @@ struct MAMovieResponse: Codable {
         case results
         case totalPages = "total_pages"
         case totalResults = "total_results"
+    }
+
+    static func == (lhs: MAMovieResponse, rhs: MAMovieResponse) -> Bool {
+        lhs.page == rhs.page
     }
 }
 

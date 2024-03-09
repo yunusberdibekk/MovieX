@@ -190,7 +190,7 @@
 		BE8FB9BE2B8EC5A50002E706 /* Product */ = {
 			isa = PBXGroup;
 			children = (
-				BE8FB9C02B8EC5B70002E706 /* Cells */,
+				BEEFF6B42B9CAF3900B33C4E /* Components */,
 				BE8FB9BF2B8EC5AC0002E706 /* Models */,
 			);
 			path = Product;
@@ -206,12 +206,12 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		BE8FB9C02B8EC5B70002E706 /* Cells */ = {
+		BE8FB9C02B8EC5B70002E706 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
 				BEDA68662B990CCF008A3E83 /* MAMovieCollectionCell.swift */,
 			);
-			path = Cells;
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		BE8FB9C12B8EC5D10002E706 /* Resources */ = {
@@ -322,6 +322,14 @@
 				BE8FB9D22B8ED2210002E706 /* MARootTabBarController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		BEEFF6B42B9CAF3900B33C4E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FB9C02B8EC5B70002E706 /* Cell */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

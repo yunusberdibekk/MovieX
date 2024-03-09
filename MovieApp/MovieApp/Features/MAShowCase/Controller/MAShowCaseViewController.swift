@@ -59,7 +59,7 @@ extension MAShowCaseViewController: MAShowCaseViewControllerProtocol {
     }
 
     func prepareViewController() {
-        title = "Home"
+        title = "Show Case"
         view.backgroundColor = .secondarySystemBackground
     }
 
