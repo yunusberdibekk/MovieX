@@ -30,19 +30,26 @@ final class MXDiscoveryViewModel: MXUserDefaultsManager {
     private var searchedMovies: [Movie] = []
 
     private func fetchDiscoverMovies() {
+        view?.showLoadingView()
         APIClient.shared.execute(
             TMDBRequest.fetchDiscoverMovies.urlRequest(),
             expecting: MovieResponse.self)
         { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let newMovieResponse):
-                self?.movies = newMovieResponse.results
+                self.movies = newMovieResponse.results
 
                 DispatchQueue.main.async {
-                    self?.view?.reloadCollectionView(on: newMovieResponse.results)
+                    self.view?.reloadCollectionView(on: newMovieResponse.results)
+                    self.view?.dismissLoadingView()
                 }
             case .failure(let error):
-                print(error.description)
+                self.view?.dismissLoadingView()
+                self.view?.alert(
+                    title: "Error!",
+                    message: error.description,
+                    actionTitle: "OK")
             }
         }
     }
@@ -135,7 +142,7 @@ extension MXDiscoveryViewModel: MXDiscoverViewModelProtocol {
             return
         }
 
-        fetchQueryMovies(query: query)
+        fetchQueryMovies(query: query.lowercased())
     }
 
     func searchBarCancelButtonClicked() {

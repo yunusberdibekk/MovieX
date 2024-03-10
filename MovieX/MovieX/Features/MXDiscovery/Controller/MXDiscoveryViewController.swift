@@ -18,9 +18,11 @@ protocol MXDiscoveryViewControllerProtocol: AnyObject, Alertable, Pushable {
     func prepareCollectionView()
     func reloadCollectionView(on movies: [Movie])
     func prepareDataSource()
+    func showLoadingView()
+    func dismissLoadingView()
 }
 
-final class MXDiscoveryViewController: UIViewController {
+final class MXDiscoveryViewController: MXRefreshableViewController {
     private lazy var viewModel: MXDiscoverViewModelProtocol = MXDiscoveryViewModel()
     private var dataSource: UICollectionViewDiffableDataSource<MXDiscoveryViewModel.Section, Movie>!
 
@@ -104,6 +106,14 @@ extension MXDiscoveryViewController: MXDiscoveryViewControllerProtocol {
         snapshot.appendSections([.main])
         snapshot.appendItems(movies)
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+    }
+
+    func showLoadingView() {
+        startRefreshing()
+    }
+
+    func dismissLoadingView() {
+        stopRefreshing()
     }
 }
 

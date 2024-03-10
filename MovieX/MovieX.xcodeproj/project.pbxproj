@@ -172,9 +172,9 @@
 		BE8FB9BD2B8EC5980002E706 /* MXShowCase */ = {
 			isa = PBXGroup;
 			children = (
-				BEEFF6872B9A7EDB00B33C4E /* Controller */,
-				BEEFF6852B9A77F800B33C4E /* View */,
 				BEEFF6862B9A77FE00B33C4E /* ViewModel */,
+				BEEFF6852B9A77F800B33C4E /* View */,
+				BEEFF6872B9A7EDB00B33C4E /* Controller */,
 			);
 			path = MXShowCase;
 			sourceTree = "<group>";

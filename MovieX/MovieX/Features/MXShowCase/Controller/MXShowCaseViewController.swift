@@ -53,12 +53,11 @@ extension MXShowCaseViewController: MXShowCaseViewControllerProtocol {
     }
 
     func prepareViewController() {
-        view.backgroundColor = .secondarySystemBackground
+        view.backgroundColor = .systemBackground
     }
 
     func prepareTableView() {
         view.addSubview(tableView)
-        tableView.backgroundColor = .secondarySystemBackground
         tableView.delegate = self
         tableView.dataSource = self
 

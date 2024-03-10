@@ -23,10 +23,6 @@ protocol MXComingSoonViewModelProtocol {
 }
 
 final class MXComingSoonViewModel: MXUserDefaultsManager {
-    enum Section {
-        case main
-    }
-
     weak var view: MXComingSoonViewControllerProtocol?
     private var isLoadingMoreMovies: Bool = false
     private var movieResponse: MovieResponse?
@@ -100,7 +96,7 @@ extension MXComingSoonViewModel: MXComingSoonViewModelProtocol {
 
         searchedMovies = movies.filter { movie in
             guard let movieName = movie.original_name ?? movie.original_title else { return false }
-            guard movieName.contains(query) else { return false }
+            guard movieName.contains(query.lowercased()) else { return false }
 
             return true
         }
