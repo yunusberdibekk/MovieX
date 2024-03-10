@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: - TODO: LOADING INDICATOR TO BE ADDED.
+
 protocol MXDiscoveryViewControllerProtocol: AnyObject, Alertable, Pushable {
     var frame: CGRect { get }
     var searchText: String? { get }
@@ -58,6 +60,8 @@ extension MXDiscoveryViewController: MXDiscoveryViewControllerProtocol {
     func prepareView() {
         view.backgroundColor = .systemBackground
         title = "Discovery"
+        navigationItem.searchController?.searchResultsUpdater = self
+        navigationItem.searchController?.searchBar.delegate = self
     }
 
     func prepareSearchController() {

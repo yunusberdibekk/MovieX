@@ -11,70 +11,122 @@ protocol MXComingSoonViewModelProtocol {
     var view: MXComingSoonViewControllerProtocol? { get set }
 
     func viewDidLoad()
-    func viewWillAppear()
-    func didSelectItemAt(_ index: Int)
-    func sizeForItemAt() -> CGSize
-    func didSelectContextMenuConfiguration(_ index: Int)
-    func scrollViewDidScroll()
-
+    func updateSearchResults()
+    func searchBarCancelButtonClicked()
     func numberOfItemsInSection() -> Int
     func numberOfSections() -> Int
     func cellForRowAt(_ index: Int) -> Movie
+    func didSelectItemAt(_ index: Int)
+    func didSelectContextMenuConfiguration(_ index: Int)
+    func sizeForItemAt() -> CGSize
+    func scrollViewDidScroll()
 }
 
 final class MXComingSoonViewModel: MXUserDefaultsManager {
+    enum Section {
+        case main
+    }
+
     weak var view: MXComingSoonViewControllerProtocol?
     private var isLoadingMoreMovies: Bool = false
     private var movieResponse: MovieResponse?
     private var movies: [Movie] = []
+    private var searchedMovies: [Movie] = []
 
     private func fetchMovies(page: String) {
         guard !isLoadingMoreMovies else {
             return
         }
 
+        view?.showLoadingView()
         isLoadingMoreMovies = true
 
         APIClient.shared.execute(TMDBRequest.fetchUpcomingMovies(page).urlRequest(),
                                  expecting: MovieResponse.self)
         { [weak self] result in
             guard let self else { return }
-
             switch result {
             case .success(let newMovieResponse):
                 guard self.movieResponse != newMovieResponse else {
-                    self.isLoadingMoreMovies = false
+                    updateUI()
                     return
                 }
+
                 self.movieResponse = newMovieResponse
                 self.movies.append(contentsOf: newMovieResponse.results)
 
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.view?.reloadCollectionView()
-                    self.isLoadingMoreMovies = false
+                    self.updateUI()
                 }
             case .failure(let error):
-                print(error.description)
-                self.isLoadingMoreMovies = false
+                updateUI()
+                view?.alert(
+                    title: "Error!",
+                    message: error.description,
+                    actionTitle: "OK")
             }
         }
+    }
+
+    private func updateUI() {
+        view?.dismissLoadingView()
+        isLoadingMoreMovies = false
     }
 }
 
 // MARK: - Controller + MAComingSoonViewModelProtocol
 
 extension MXComingSoonViewModel: MXComingSoonViewModelProtocol {
-    func viewDidLoad() {
-        view?.prepareView()
-        view?.prepareCollectionView()
+    var isSearching: Bool {
+        !(view?.searchText?.isEmpty ?? true)
     }
 
-    func viewWillAppear() {
-        fetchMovies(page: movieResponse?.page.description ?? "1")
+    func viewDidLoad() {
+        view?.prepareView()
+        view?.prepareSearchController()
+        view?.prepareCollectionView()
+        fetchMovies(page: "1")
+    }
+
+    func updateSearchResults() {
+        guard let query = view?.searchText,
+              !query.trimmingCharacters(in: .whitespaces).isEmpty
+        else {
+            searchedMovies.removeAll()
+            view?.reloadCollectionView()
+            return
+        }
+
+        searchedMovies = movies.filter { movie in
+            guard let movieName = movie.original_name ?? movie.original_title else { return false }
+            guard movieName.contains(query) else { return false }
+
+            return true
+        }
+
+        view?.reloadCollectionView()
+    }
+
+    func searchBarCancelButtonClicked() {
+        searchedMovies.removeAll()
+        view?.reloadCollectionView()
+    }
+
+    func numberOfItemsInSection() -> Int {
+        isSearching ? searchedMovies.count : movies.count
+    }
+
+    func numberOfSections() -> Int {
+        1
+    }
+
+    func cellForRowAt(_ index: Int) -> Movie {
+        isSearching ? searchedMovies[index] : movies[index]
     }
 
     func didSelectItemAt(_ index: Int) {
-        let movie = movies[index]
+        let movie = isSearching ? searchedMovies[index] : movies[index]
 
         guard let titleName = movie.original_title ?? movie.original_name else {
             return
@@ -104,13 +156,8 @@ extension MXComingSoonViewModel: MXComingSoonViewModelProtocol {
         }
     }
 
-    func sizeForItemAt() -> CGSize {
-        guard let view else { return .zero }
-        return CGSize(width: view.frame.width, height: view.frame.width * 0.318)
-    }
-
     func didSelectContextMenuConfiguration(_ index: Int) {
-        let movie = movies[index]
+        let movie = isSearching ? searchedMovies[index] : movies[index]
 
         update(.add, movie: movie) { [weak self] error in
             self?.view?.alert(
@@ -118,6 +165,11 @@ extension MXComingSoonViewModel: MXComingSoonViewModelProtocol {
                 message: error == nil ? "Movie added successfully" : error?.description ?? "An error occured.",
                 actionTitle: "OK")
         }
+    }
+
+    func sizeForItemAt() -> CGSize {
+        guard let view else { return .zero }
+        return CGSize(width: view.frame.width, height: view.frame.width * 0.318)
     }
 
     func scrollViewDidScroll() {
@@ -135,17 +187,5 @@ extension MXComingSoonViewModel: MXComingSoonViewModelProtocol {
 
             timer.invalidate()
         }
-    }
-
-    func numberOfItemsInSection() -> Int {
-        movies.count
-    }
-
-    func numberOfSections() -> Int {
-        1
-    }
-
-    func cellForRowAt(_ index: Int) -> Movie {
-        movies[index]
     }
 }

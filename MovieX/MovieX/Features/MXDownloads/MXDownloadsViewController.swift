@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: - TODO: SEARCH EKLENECEK. DIFFABLE DATA SOURCE EKLENECEK. SETTİNGS EKLENECEK.
+
 protocol MXDownloadsViewControllerProtocol: AnyObject, Pushable {
     var frame: CGRect { get }
 

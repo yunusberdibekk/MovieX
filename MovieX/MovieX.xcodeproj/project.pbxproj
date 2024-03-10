@@ -36,6 +36,7 @@
 		BE8FB9DA2B8FA9F60002E706 /* MXMovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FB9D92B8FA9F60002E706 /* MXMovieDetailViewModel.swift */; };
 		BEDA68642B98F8F3008A3E83 /* MXDownloadsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDA68632B98F8F3008A3E83 /* MXDownloadsViewModel.swift */; };
 		BEDA68672B990CCF008A3E83 /* MXMovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDA68662B990CCF008A3E83 /* MXMovieCollectionCell.swift */; };
+		BEDDAE3F2B9E3581000A5F59 /* MXRefreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDDAE3E2B9E3581000A5F59 /* MXRefreshable.swift */; };
 		BEEFF68A2B9A86A500B33C4E /* MXComingSoonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEFF6892B9A86A500B33C4E /* MXComingSoonViewModel.swift */; };
 		BEFBD0FF2B9D117F001C4D86 /* MXDiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFBD0FE2B9D117F001C4D86 /* MXDiscoveryViewController.swift */; };
 		BEFBD1012B9D118C001C4D86 /* MXDiscoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFBD1002B9D118C001C4D86 /* MXDiscoveryViewModel.swift */; };
@@ -71,6 +72,7 @@
 		BE8FB9D92B8FA9F60002E706 /* MXMovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXMovieDetailViewModel.swift; sourceTree = "<group>"; };
 		BEDA68632B98F8F3008A3E83 /* MXDownloadsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXDownloadsViewModel.swift; sourceTree = "<group>"; };
 		BEDA68662B990CCF008A3E83 /* MXMovieCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXMovieCollectionCell.swift; sourceTree = "<group>"; };
+		BEDDAE3E2B9E3581000A5F59 /* MXRefreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXRefreshable.swift; sourceTree = "<group>"; };
 		BEEFF6892B9A86A500B33C4E /* MXComingSoonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXComingSoonViewModel.swift; sourceTree = "<group>"; };
 		BEFBD0FE2B9D117F001C4D86 /* MXDiscoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXDiscoveryViewController.swift; sourceTree = "<group>"; };
 		BEFBD1002B9D118C001C4D86 /* MXDiscoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXDiscoveryViewModel.swift; sourceTree = "<group>"; };
@@ -240,8 +242,8 @@
 		BE8FB9C92B8ED18F0002E706 /* MXComingSoon */ = {
 			isa = PBXGroup;
 			children = (
-				BE8FB9CC2B8ED1CE0002E706 /* MXComingSoonViewController.swift */,
-				BEEFF6892B9A86A500B33C4E /* MXComingSoonViewModel.swift */,
+				BEDDAE412B9E4237000A5F59 /* ViewModel */,
+				BEDDAE402B9E4234000A5F59 /* Controller */,
 			);
 			path = MXComingSoon;
 			sourceTree = "<group>";
@@ -276,6 +278,7 @@
 		BEDDAE352B9D3362000A5F59 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				BEDDAE3D2B9E3573000A5F59 /* MXRefreshable */,
 				BE8FB9D82B8FA9E60002E706 /* MXMovieDetail */,
 			);
 			path = Controller;
@@ -303,6 +306,30 @@
 				BE8FB9D22B8ED2210002E706 /* MXRootTabBarController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		BEDDAE3D2B9E3573000A5F59 /* MXRefreshable */ = {
+			isa = PBXGroup;
+			children = (
+				BEDDAE3E2B9E3581000A5F59 /* MXRefreshable.swift */,
+			);
+			path = MXRefreshable;
+			sourceTree = "<group>";
+		};
+		BEDDAE402B9E4234000A5F59 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BEEFF6892B9A86A500B33C4E /* MXComingSoonViewModel.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BEDDAE412B9E4237000A5F59 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FB9CC2B8ED1CE0002E706 /* MXComingSoonViewController.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		BEEFF6852B9A77F800B33C4E /* View */ = {
@@ -436,6 +463,7 @@
 				BE8FB9B22B8EBE7E0002E706 /* APIEndpoint.swift in Sources */,
 				BE7AB3F62B912543002CA593 /* Pushable.swift in Sources */,
 				BE8FB9AE2B8EB79E0002E706 /* MXShowCaseTableHeaderView.swift in Sources */,
+				BEDDAE3F2B9E3581000A5F59 /* MXRefreshable.swift in Sources */,
 				BEEFF68A2B9A86A500B33C4E /* MXComingSoonViewModel.swift in Sources */,
 				BE8FB9D12B8ED1D90002E706 /* MXDownloadsViewController.swift in Sources */,
 				BE8FB9D62B8FA9690002E706 /* MXMovieDetailViewController.swift in Sources */,

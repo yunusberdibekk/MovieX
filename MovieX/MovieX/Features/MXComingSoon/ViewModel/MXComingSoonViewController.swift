@@ -8,18 +8,24 @@
 import UIKit
 
 protocol MXComingSoonViewControllerProtocol: AnyObject, Pushable, Alertable {
+    var searchText: String? { get }
+
     var frame: CGRect { get }
     var scroolHeight: CGFloat { get }
     var contentOffset: CGFloat { get }
     var totalContentHeight: CGFloat { get }
 
     func prepareView()
+    func prepareSearchController()
     func prepareCollectionView()
     func reloadCollectionView()
+    func showLoadingView()
+    func dismissLoadingView()
 }
 
-final class MXComingSoonViewController: UIViewController {
+final class MXComingSoonViewController: MXRefreshableViewController {
     private lazy var viewModel: MXComingSoonViewModelProtocol = MXComingSoonViewModel()
+    private var dataSource: UICollectionViewDiffableDataSource<MXDiscoveryViewModel.Section, Movie>!
 
     // MARK: - UI Components
 
@@ -43,16 +49,15 @@ final class MXComingSoonViewController: UIViewController {
         viewModel.view = self
         viewModel.viewDidLoad()
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        viewModel.viewWillAppear()
-    }
 }
 
 // MARK: -  Controller + MAComingSoonViewControllerProtocol
 
 extension MXComingSoonViewController: MXComingSoonViewControllerProtocol {
+    var searchText: String? {
+        navigationItem.searchController?.searchBar.text
+    }
+
     var scroolHeight: CGFloat {
         collectionView.frame.height
     }
@@ -87,8 +92,25 @@ extension MXComingSoonViewController: MXComingSoonViewControllerProtocol {
         ])
     }
 
+    func prepareSearchController() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search for a movie..."
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+    }
+
     func reloadCollectionView() {
         collectionView.reloadData()
+    }
+
+    func showLoadingView() {
+        startRefreshing()
+    }
+
+    func dismissLoadingView() {
+        stopRefreshing()
     }
 }
 
@@ -114,15 +136,15 @@ extension MXComingSoonViewController: UICollectionViewDataSource {
         cell.configure(with: viewModel.cellForRowAt(indexPath.row))
         return cell
     }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.didSelectItemAt(indexPath.row)
-    }
 }
 
 // MARK: -  Controller + UICollectionViewDelegate
 
 extension MXComingSoonViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectItemAt(indexPath.row)
+    }
+
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
             let downloadAction = UIAction(title: "Download", state: .off) { _ in
@@ -145,5 +167,17 @@ extension MXComingSoonViewController: UICollectionViewDelegate {
 extension MXComingSoonViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         viewModel.sizeForItemAt()
+    }
+}
+
+// MARK: - Controller + UISearchControllerDelegate, UISearchBarDelegate
+
+extension MXComingSoonViewController: UISearchBarDelegate, UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        viewModel.updateSearchResults()
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.searchBarCancelButtonClicked()
     }
 }
