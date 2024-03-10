@@ -1,5 +1,5 @@
 //
-//  MADiscoverViewController.swift
+//  MXDiscoveryViewController.swift
 //  MovieX
 //
 //  Created by Yunus Emre Berdibek on 28.02.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MXDiscoverViewControllerProtocol: AnyObject, Alertable, Pushable {
+protocol MXDiscoveryViewControllerProtocol: AnyObject, Alertable, Pushable {
     var frame: CGRect { get }
     var searchText: String? { get }
 
@@ -18,9 +18,9 @@ protocol MXDiscoverViewControllerProtocol: AnyObject, Alertable, Pushable {
     func prepareDataSource()
 }
 
-final class MXDiscoverViewController: UIViewController {
-    private lazy var viewModel: MXDiscoverViewModelProtocol = MXDiscoverViewModel()
-    private var dataSource: UICollectionViewDiffableDataSource<MXDiscoverViewModel.Section, Movie>!
+final class MXDiscoveryViewController: UIViewController {
+    private lazy var viewModel: MXDiscoverViewModelProtocol = MXDiscoveryViewModel()
+    private var dataSource: UICollectionViewDiffableDataSource<MXDiscoveryViewModel.Section, Movie>!
 
     // MARK: - UI Components
 
@@ -44,14 +44,9 @@ final class MXDiscoverViewController: UIViewController {
         viewModel.view = self
         viewModel.viewDidLoad()
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.viewWillAppear()
-    }
 }
 
-extension MXDiscoverViewController: MXDiscoverViewControllerProtocol {
+extension MXDiscoveryViewController: MXDiscoveryViewControllerProtocol {
     var frame: CGRect {
         view.frame
     }
@@ -87,7 +82,7 @@ extension MXDiscoverViewController: MXDiscoverViewControllerProtocol {
     }
 
     func prepareDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<MXDiscoverViewModel.Section, Movie>(collectionView: collectionView, cellProvider: { collectionView, indexPath, movie in
+        dataSource = UICollectionViewDiffableDataSource<MXDiscoveryViewModel.Section, Movie>(collectionView: collectionView, cellProvider: { collectionView, indexPath, movie in
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: MXMovieCollectionCell.identifier,
                 for: indexPath) as? MXMovieCollectionCell
@@ -101,7 +96,7 @@ extension MXDiscoverViewController: MXDiscoverViewControllerProtocol {
     }
 
     func reloadCollectionView(on movies: [Movie]) {
-        var snapshot = NSDiffableDataSourceSnapshot<MXDiscoverViewModel.Section, Movie>()
+        var snapshot = NSDiffableDataSourceSnapshot<MXDiscoveryViewModel.Section, Movie>()
         snapshot.appendSections([.main])
         snapshot.appendItems(movies)
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
@@ -110,9 +105,25 @@ extension MXDiscoverViewController: MXDiscoverViewControllerProtocol {
 
 // MARK: - Controller + UICollectionViewDelegate
 
-extension MXDiscoverViewController: UICollectionViewDelegate {}
+extension MXDiscoveryViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectItemAt(indexPath.row)
+    }
 
-extension MXDiscoverViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let downloadAction = UIAction(title: "Download", state: .off) { [weak self] _ in
+                if let indexPath = indexPaths.first {
+                    self?.viewModel.didSelectContextMenuConfiguration(indexPath.row)
+                }
+            }
+            return UIMenu(title: "", options: .singleSelection, children: [downloadAction])
+        }
+        return config
+    }
+}
+
+extension MXDiscoveryViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         viewModel.sizeForItemAt()
     }
@@ -120,8 +131,12 @@ extension MXDiscoverViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Controller + UISearchControllerDelegate, UISearchBarDelegate
 
-extension MXDiscoverViewController: UISearchBarDelegate, UISearchResultsUpdating {
+extension MXDiscoveryViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         viewModel.updateSearchResults()
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.searchBarCancelButtonClicked()
     }
 }

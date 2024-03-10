@@ -37,8 +37,8 @@
 		BEDA68642B98F8F3008A3E83 /* MXDownloadsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDA68632B98F8F3008A3E83 /* MXDownloadsViewModel.swift */; };
 		BEDA68672B990CCF008A3E83 /* MXMovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDA68662B990CCF008A3E83 /* MXMovieCollectionCell.swift */; };
 		BEEFF68A2B9A86A500B33C4E /* MXComingSoonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEFF6892B9A86A500B33C4E /* MXComingSoonViewModel.swift */; };
-		BEFBD0FF2B9D117F001C4D86 /* MXDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFBD0FE2B9D117F001C4D86 /* MXDiscoverViewController.swift */; };
-		BEFBD1012B9D118C001C4D86 /* MXDiscoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFBD1002B9D118C001C4D86 /* MXDiscoverViewModel.swift */; };
+		BEFBD0FF2B9D117F001C4D86 /* MXDiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFBD0FE2B9D117F001C4D86 /* MXDiscoveryViewController.swift */; };
+		BEFBD1012B9D118C001C4D86 /* MXDiscoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFBD1002B9D118C001C4D86 /* MXDiscoveryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,8 +72,8 @@
 		BEDA68632B98F8F3008A3E83 /* MXDownloadsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXDownloadsViewModel.swift; sourceTree = "<group>"; };
 		BEDA68662B990CCF008A3E83 /* MXMovieCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXMovieCollectionCell.swift; sourceTree = "<group>"; };
 		BEEFF6892B9A86A500B33C4E /* MXComingSoonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXComingSoonViewModel.swift; sourceTree = "<group>"; };
-		BEFBD0FE2B9D117F001C4D86 /* MXDiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXDiscoverViewController.swift; sourceTree = "<group>"; };
-		BEFBD1002B9D118C001C4D86 /* MXDiscoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXDiscoverViewModel.swift; sourceTree = "<group>"; };
+		BEFBD0FE2B9D117F001C4D86 /* MXDiscoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXDiscoveryViewController.swift; sourceTree = "<group>"; };
+		BEFBD1002B9D118C001C4D86 /* MXDiscoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXDiscoveryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,11 +158,11 @@
 		BE8FB9BC2B8EC5900002E706 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				BE8FB9C82B8ED17A0002E706 /* MXRoot */,
 				BE8FB9BD2B8EC5980002E706 /* MXShowCase */,
-				BE8FB9CA2B8ED1960002E706 /* MXDiscover */,
+				BE8FB9CA2B8ED1960002E706 /* MXDiscovery */,
 				BE8FB9C92B8ED18F0002E706 /* MXComingSoon */,
 				BE8FB9CB2B8ED1980002E706 /* MXDownloads */,
-				BE8FB9D72B8FA9750002E706 /* Product */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -229,12 +229,12 @@
 			path = Constant;
 			sourceTree = "<group>";
 		};
-		BE8FB9C82B8ED17A0002E706 /* MARoot */ = {
+		BE8FB9C82B8ED17A0002E706 /* MXRoot */ = {
 			isa = PBXGroup;
 			children = (
 				BE8FB9D22B8ED2210002E706 /* MXRootTabBarController.swift */,
 			);
-			path = MARoot;
+			path = MXRoot;
 			sourceTree = "<group>";
 		};
 		BE8FB9C92B8ED18F0002E706 /* MXComingSoon */ = {
@@ -246,13 +246,13 @@
 			path = MXComingSoon;
 			sourceTree = "<group>";
 		};
-		BE8FB9CA2B8ED1960002E706 /* MXDiscover */ = {
+		BE8FB9CA2B8ED1960002E706 /* MXDiscovery */ = {
 			isa = PBXGroup;
 			children = (
-				BEFBD0FE2B9D117F001C4D86 /* MXDiscoverViewController.swift */,
-				BEFBD1002B9D118C001C4D86 /* MXDiscoverViewModel.swift */,
+				BEFBD0FE2B9D117F001C4D86 /* MXDiscoveryViewController.swift */,
+				BEFBD1002B9D118C001C4D86 /* MXDiscoveryViewModel.swift */,
 			);
-			path = MXDiscover;
+			path = MXDiscovery;
 			sourceTree = "<group>";
 		};
 		BE8FB9CB2B8ED1980002E706 /* MXDownloads */ = {
@@ -264,22 +264,21 @@
 			path = MXDownloads;
 			sourceTree = "<group>";
 		};
-		BE8FB9D72B8FA9750002E706 /* Product */ = {
-			isa = PBXGroup;
-			children = (
-				BE8FB9C82B8ED17A0002E706 /* MARoot */,
-				BE8FB9D82B8FA9E60002E706 /* MAMovieDetail */,
-			);
-			path = Product;
-			sourceTree = "<group>";
-		};
-		BE8FB9D82B8FA9E60002E706 /* MAMovieDetail */ = {
+		BE8FB9D82B8FA9E60002E706 /* MXMovieDetail */ = {
 			isa = PBXGroup;
 			children = (
 				BE8FB9D52B8FA9690002E706 /* MXMovieDetailViewController.swift */,
 				BE8FB9D92B8FA9F60002E706 /* MXMovieDetailViewModel.swift */,
 			);
-			path = MAMovieDetail;
+			path = MXMovieDetail;
+			sourceTree = "<group>";
+		};
+		BEDDAE352B9D3362000A5F59 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FB9D82B8FA9E60002E706 /* MXMovieDetail */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		BEEFF6852B9A77F800B33C4E /* View */ = {
@@ -311,6 +310,7 @@
 		BEEFF6B42B9CAF3900B33C4E /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				BEDDAE352B9D3362000A5F59 /* Controller */,
 				BE8FB9C02B8EC5B70002E706 /* Cell */,
 			);
 			path = Components;
@@ -421,11 +421,11 @@
 				BE8FB97D2B8D8C5D0002E706 /* AppDelegate.swift in Sources */,
 				BE8FB9AC2B8EAD630002E706 /* MovieResponse.swift in Sources */,
 				BE8FB9B02B8EBBB70002E706 /* APIClient.swift in Sources */,
-				BEFBD0FF2B9D117F001C4D86 /* MXDiscoverViewController.swift in Sources */,
+				BEFBD0FF2B9D117F001C4D86 /* MXDiscoveryViewController.swift in Sources */,
 				BE8FB9AA2B8EAC5E0002E706 /* MXShowCaseCollectionCell.swift in Sources */,
 				BE8FB9C72B8ED1600002E706 /* SFSymbols.swift in Sources */,
 				BEDA68642B98F8F3008A3E83 /* MXDownloadsViewModel.swift in Sources */,
-				BEFBD1012B9D118C001C4D86 /* MXDiscoverViewModel.swift in Sources */,
+				BEFBD1012B9D118C001C4D86 /* MXDiscoveryViewModel.swift in Sources */,
 				BE7AB3FA2B9268AF002CA593 /* MXUserDefaultsManager.swift in Sources */,
 				BE8FB9A82B8EAC4F0002E706 /* MXShowCaseTableViewCell.swift in Sources */,
 				BE8FB9B42B8EBE840002E706 /* APIRequest.swift in Sources */,
@@ -578,7 +578,7 @@
 				DEVELOPMENT_TEAM = 46PR5V47LD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MovieX/App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Movie App";
+				INFOPLIST_KEY_CFBundleDisplayName = "Movie X";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -606,7 +606,7 @@
 				DEVELOPMENT_TEAM = 46PR5V47LD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MovieX/App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Movie App";
+				INFOPLIST_KEY_CFBundleDisplayName = "Movie X";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

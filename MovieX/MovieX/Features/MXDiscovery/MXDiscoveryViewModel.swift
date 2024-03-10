@@ -1,5 +1,5 @@
 //
-//  MATopSearchViewModel.swift
+//  MXDiscoveryViewModel.swift
 //  MovieX
 //
 //  Created by Yunus Emre Berdibek on 9.03.2024.
@@ -8,30 +8,26 @@
 import Foundation
 
 protocol MXDiscoverViewModelProtocol {
-    var view: MXDiscoverViewControllerProtocol? { get set }
+    var view: MXDiscoveryViewControllerProtocol? { get set }
 
     func viewDidLoad()
-    func viewWillAppear()
     func didSelectItemAt(_ index: Int)
     func sizeForItemAt() -> CGSize
     func didSelectContextMenuConfiguration(_ index: Int)
-    func cellForRowAt(_ index: Int) -> Movie
-
     func updateSearchResults()
+    func searchBarCancelButtonClicked()
 }
 
-final class MXDiscoverViewModel: MXUserDefaultsManager {
-    // MARK: - Variables
-
+final class MXDiscoveryViewModel: MXUserDefaultsManager {
     enum Section {
         case main
     }
 
-    weak var view: MXDiscoverViewControllerProtocol?
-    private var isLoadingMoreMovies: Bool = false
-    private var movieResponse: MovieResponse?
+    // MARK: - Variables
+
+    weak var view: MXDiscoveryViewControllerProtocol?
     private var movies: [Movie] = []
-    private var filteredMovies: [Movie] = []
+    private var searchedMovies: [Movie] = []
 
     private func fetchDiscoverMovies() {
         APIClient.shared.execute(
@@ -40,8 +36,26 @@ final class MXDiscoverViewModel: MXUserDefaultsManager {
         { [weak self] result in
             switch result {
             case .success(let newMovieResponse):
-                self?.movieResponse = newMovieResponse
                 self?.movies = newMovieResponse.results
+
+                DispatchQueue.main.async {
+                    self?.view?.reloadCollectionView(on: newMovieResponse.results)
+                }
+            case .failure(let error):
+                print(error.description)
+            }
+        }
+    }
+
+    private func fetchQueryMovies(query: String) {
+        APIClient.shared.execute(
+            TMDBRequest.search(query).urlRequest(),
+            expecting: MovieResponse.self)
+        { [weak self] result in
+            switch result {
+            case .success(let newMovieResponse):
+                guard !newMovieResponse.results.isEmpty else { return }
+                self?.searchedMovies = newMovieResponse.results
 
                 DispatchQueue.main.async {
                     self?.view?.reloadCollectionView(on: newMovieResponse.results)
@@ -55,25 +69,22 @@ final class MXDiscoverViewModel: MXUserDefaultsManager {
 
 // MARK: - ViewModel + MATopSearchViewModelProtocol.
 
-extension MXDiscoverViewModel: MXDiscoverViewModelProtocol {
+extension MXDiscoveryViewModel: MXDiscoverViewModelProtocol {
+    var isSearching: Bool {
+        !(view?.searchText?.isEmpty ?? true)
+    }
+
     func viewDidLoad() {
         view?.prepareView()
         view?.prepareSearchController()
         view?.prepareCollectionView()
         view?.prepareDataSource()
-    }
-
-    func viewWillAppear() {
         fetchDiscoverMovies()
     }
 
     func didSelectItemAt(_ index: Int) {
-        let movie = movies[index]
-
-        guard let titleName = movie.original_title ?? movie.original_name else {
-            return
-        }
-
+        let movie = isSearching ? searchedMovies[index] : movies[index]
+        guard let titleName = movie.original_title ?? movie.original_name else { return }
         let request = YTRequest.searchRequest(titleName + "trailer").urlRequest()
 
         APIClient.shared.execute(request,
@@ -104,7 +115,7 @@ extension MXDiscoverViewModel: MXDiscoverViewModelProtocol {
     }
 
     func didSelectContextMenuConfiguration(_ index: Int) {
-        let movie = movies[index]
+        let movie = isSearching ? searchedMovies[index] : movies[index]
 
         update(.add, movie: movie) { [weak self] error in
             self?.view?.alert(
@@ -114,26 +125,21 @@ extension MXDiscoverViewModel: MXDiscoverViewModelProtocol {
         }
     }
 
-    func cellForRowAt(_ index: Int) -> Movie {
-        movies[index]
-    }
-
     func updateSearchResults() {
-        guard let text = view?.searchText,
-              !text.isEmpty
+        guard let query = view?.searchText,
+              !query.trimmingCharacters(in: .whitespaces).isEmpty,
+              query.trimmingCharacters(in: .whitespaces).count >= 3
         else {
-            filteredMovies.removeAll()
+            searchedMovies.removeAll()
             view?.reloadCollectionView(on: movies)
             return
         }
 
-        filteredMovies = movies.filter { movie in
-            guard let movieName = movie.original_name ?? movie.original_title else {
-                return false
-            }
-            return movieName.contains(text.lowercased())
-        }
+        fetchQueryMovies(query: query)
+    }
 
-        view?.reloadCollectionView(on: filteredMovies)
+    func searchBarCancelButtonClicked() {
+        searchedMovies.removeAll()
+        view?.reloadCollectionView(on: movies)
     }
 }

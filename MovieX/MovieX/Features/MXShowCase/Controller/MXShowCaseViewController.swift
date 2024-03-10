@@ -53,7 +53,6 @@ extension MXShowCaseViewController: MXShowCaseViewControllerProtocol {
     }
 
     func prepareViewController() {
-        title = "Show Case"
         view.backgroundColor = .secondarySystemBackground
     }
 

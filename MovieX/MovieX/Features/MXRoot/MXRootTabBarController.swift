@@ -21,9 +21,9 @@ final class MXRootTabBarController: UITabBarController {
             image: .house,
             prefersLargeTitles: false,
             tag: 0)
-        let discoverVC = createNavigationController(
-            vc: MXDiscoverViewController(),
-            title: "Discover",
+        let discoveryVC = createNavigationController(
+            vc: MXDiscoveryViewController(),
+            title: "Discovery",
             image: .magnifyingglass,
             prefersLargeTitles: true,
             tag: 1)
@@ -42,7 +42,7 @@ final class MXRootTabBarController: UITabBarController {
 
         setViewControllers([
             showCaseVC,
-            discoverVC,
+            discoveryVC,
             comingSoonNC,
             downloadsNC,
         ], animated: true)
@@ -55,7 +55,7 @@ final class MXRootTabBarController: UITabBarController {
             title: title,
             image: UIImage(systemName: image.rawValue),
             tag: tag)
-        navVC.navigationItem.largeTitleDisplayMode = !prefersLargeTitles ? .inline : .automatic
+        navVC.navigationItem.largeTitleDisplayMode = prefersLargeTitles ? .automatic : .never
         navVC.navigationBar.prefersLargeTitles = prefersLargeTitles ? true : false
 
         return navVC
