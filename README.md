@@ -1,4 +1,4 @@
-# MovieApp
+# MovieX
 
 ## Built With
 - [Swift](https://developer.apple.com/swift/)
