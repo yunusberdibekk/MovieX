@@ -232,7 +232,7 @@
 		BE8FB9C82B8ED17A0002E706 /* MXRoot */ = {
 			isa = PBXGroup;
 			children = (
-				BE8FB9D22B8ED2210002E706 /* MXRootTabBarController.swift */,
+				BEDDAE382B9D3A62000A5F59 /* Controller */,
 			);
 			path = MXRoot;
 			sourceTree = "<group>";
@@ -249,8 +249,8 @@
 		BE8FB9CA2B8ED1960002E706 /* MXDiscovery */ = {
 			isa = PBXGroup;
 			children = (
-				BEFBD0FE2B9D117F001C4D86 /* MXDiscoveryViewController.swift */,
-				BEFBD1002B9D118C001C4D86 /* MXDiscoveryViewModel.swift */,
+				BEDDAE372B9D3A51000A5F59 /* ViewModel */,
+				BEDDAE362B9D3A4D000A5F59 /* Controller */,
 			);
 			path = MXDiscovery;
 			sourceTree = "<group>";
@@ -277,6 +277,30 @@
 			isa = PBXGroup;
 			children = (
 				BE8FB9D82B8FA9E60002E706 /* MXMovieDetail */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BEDDAE362B9D3A4D000A5F59 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BEFBD0FE2B9D117F001C4D86 /* MXDiscoveryViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BEDDAE372B9D3A51000A5F59 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BEFBD1002B9D118C001C4D86 /* MXDiscoveryViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		BEDDAE382B9D3A62000A5F59 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FB9D22B8ED2210002E706 /* MXRootTabBarController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

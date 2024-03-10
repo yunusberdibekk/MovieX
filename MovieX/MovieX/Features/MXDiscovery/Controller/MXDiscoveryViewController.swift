@@ -57,7 +57,7 @@ extension MXDiscoveryViewController: MXDiscoveryViewControllerProtocol {
 
     func prepareView() {
         view.backgroundColor = .systemBackground
-        title = "Discover"
+        title = "Discovery"
     }
 
     func prepareSearchController() {
@@ -122,6 +122,8 @@ extension MXDiscoveryViewController: UICollectionViewDelegate {
         return config
     }
 }
+
+// MARK: - Controller + UICollectionViewDelegateFlowLayout
 
 extension MXDiscoveryViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
