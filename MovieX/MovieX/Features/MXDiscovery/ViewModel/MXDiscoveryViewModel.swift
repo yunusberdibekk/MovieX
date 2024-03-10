@@ -104,7 +104,6 @@ extension MXDiscoveryViewModel: MXDiscoverViewModelProtocol {
                     title: movie.original_title ?? movie.original_name,
                     overview: movie.overview,
                     youtubeVideo: videoElement.items.first)
-
                 DispatchQueue.main.async {
                     self?.view?.push(MXMovieDetailViewController(
                         movie: movie,
